@@ -19,11 +19,12 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Timer t;
     private Random r;
     private JFrame frame;
+    private Personaje mario;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.jpg");
         fondo = icono.getImage().getScaledInstance(1200, 700, Image.SCALE_SMOOTH);
-
+        mario = new Personaje(100, 500, "imagenes/mario1.png");
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
@@ -39,16 +40,21 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(fondo, 0, 0, null);
+        mario.dibujar(g2d);
+        repaint();
     }
 
     public void actionPerformed(ActionEvent e) {
+        this.mario.mover();
         repaint();
     }
 
     public void keyPressed(KeyEvent e) {
+        this.mario.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {
+        this.mario.keyReleased(e);
     }
 
     public void keyTyped(KeyEvent e) {

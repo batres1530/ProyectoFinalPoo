@@ -74,10 +74,6 @@ public class Figura {
         return this.icono;
     }
     
-    public void mover() {
-        y++;
-    }
-    
     public void setVisible(int visible) {
         this.visible = visible;
     }
