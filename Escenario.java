@@ -23,7 +23,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Estructura[] plataformas;
 
     public Escenario(JFrame jfp) {
-        icono = new ImageIcon("imagenes/fondo.jpg");
+        icono = new ImageIcon("imagenes/fondo1.jpg");
         fondo = icono.getImage().getScaledInstance(1200, 700, Image.SCALE_SMOOTH);
         mario = new Personaje(100, 500, "imagenes/mario1.png");
         this.setSize(1200, 700);
@@ -31,7 +31,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         this.frame = jfp;
         plataformas = new Estructura[5];
         plataformas[0] = new Estructura(200, 420, "imagenes/plataforma.png");
-
+        plataformas[1] = new Estructura(350, 420, "imagenes/plataforma.png");
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
@@ -39,7 +39,6 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         this.setFocusable(true);
     }
 
-    @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -58,7 +57,6 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         mario.mover();
         boolean sobreEstructura = false;
@@ -99,17 +97,14 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         repaint();
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
         this.mario.keyPressed(e);
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
         this.mario.keyReleased(e);
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
     }
 }
