@@ -22,8 +22,8 @@ public class Figura {
         this.icono = new ImageIcon(imag);
         this.img = icono.getImage();
         this.visible = 1;
-        this.ancho = icono.getIconWidth();
-        this.alto = icono.getIconHeight();
+        this.ancho = this.icono.getIconWidth();
+        this.alto = this.icono.getIconHeight();
     }
     
     public void setX(int x) {
@@ -83,11 +83,11 @@ public class Figura {
     }
     
     public Rectangle getRectangle() {
-        return this.rect = new Rectangle(getX(), getY(), getAncho(), getAlto());
+        return this.rect = new Rectangle(this.x, this.y, this.ancho, this.alto);
     }
     
     public boolean getDetectar(Rectangle r) {
-        this.rect = new Rectangle(getX(), getY(), getAncho(), getAlto());
+        this.rect = new Rectangle(this.x, this.y, this.ancho, this.alto);
         return this.rect.intersects(r);
     }
     

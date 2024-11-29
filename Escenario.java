@@ -3,14 +3,14 @@ import java.awt.Image;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 import java.util.Random;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.awt.Color;
-import java.awt.Font;
 import javax.swing.JFrame;
 
 public class Escenario extends JPanel implements ActionListener, KeyListener {
@@ -20,6 +20,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Random r;
     private JFrame frame;
     private Personaje mario;
+    private Estructura[] plataformas;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.jpg");
@@ -28,36 +29,87 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
-        t = new Timer(5, null);
+        plataformas = new Estructura[5];
+        plataformas[0] = new Estructura(200, 420, "imagenes/plataforma.png");
+
+        t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
-
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(fondo, 0, 0, null);
+        g2d.drawImage(fondo, 0, 0, this.getWidth(), this.getHeight(), null);
+        for (int i = 0; i < plataformas.length; i++) {
+            if (plataformas[i] != null) {
+                plataformas[i].dibujar(g2d);
+                Rectangle rectPlataforma = plataformas[i].getRectangle();
+                g2d.setColor(Color.RED);
+                g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
+            }
+        }
         mario.dibujar(g2d);
-        repaint();
+        Rectangle rectMario = mario.getRectangle();
+        g2d.setColor(Color.BLUE);
+        g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        this.mario.mover();
+        mario.mover();
+        boolean sobreEstructura = false;
+
+        for (Estructura estructura : plataformas) {
+            if (estructura != null && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
+                if (mario.getVelocidadY() > 0 && (mario.getY() + mario.getAlto()) >= estructura.getY()) {
+                    mario.setY(estructura.getY() - mario.getAlto());
+                    mario.setVelocidadY(0);
+                    mario.setSaltando(false);
+                    sobreEstructura = true;
+                    break;
+                }
+            }
+        }
+
+        if (!sobreEstructura) {
+            mario.setVelocidadY(mario.getVelocidadY() + 1);
+            mario.setY(mario.getY() + mario.getVelocidadY());
+
+            if (mario.getY() >= 500) {
+                mario.setY(500);
+                mario.setVelocidadY(0);
+                mario.setSaltando(false);
+            }
+        }
+
+        for (Estructura estructura : plataformas) {
+            if (estructura != null && mario.getRectangle().intersects(estructura.getRectangle())) {
+                if (mario.getVelocidadY() < 0 && mario.getY() <= estructura.getY() + 50) {
+                    mario.setY(estructura.getY() + 50);
+                    mario.setVelocidadY(0);
+                    break;
+                }
+            }
+        }
+
         repaint();
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         this.mario.keyPressed(e);
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         this.mario.keyReleased(e);
     }
 
+    @Override
     public void keyTyped(KeyEvent e) {
-
     }
 }
