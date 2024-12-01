@@ -10,7 +10,7 @@ public class Personaje extends Figura {
     private boolean saltando;
     private final int gravedad = 1;
     private final int alturaSalto = -20;
-    private final int suelo = 500;
+    private final int suelo = 550;
 
     public Personaje(int x, int y, String imag) {
         super(x, y, imag);
@@ -42,12 +42,12 @@ public class Personaje extends Figura {
 
         if (tecla == KeyEvent.VK_RIGHT) {
             this.avanceX = 5;
-            cambiarImagen("imagenes/mario2.png");
+            cambiarImagen("imagenes/marioderecha.png");
         }
 
         if (tecla == KeyEvent.VK_LEFT) {
             this.avanceX = -5;
-            cambiarImagen("imagenes/mario1.png");
+            cambiarImagen("imagenes/marioizquierta.png");
         }
 
         if (tecla == KeyEvent.VK_SPACE && !saltando) {

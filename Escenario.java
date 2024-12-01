@@ -23,15 +23,17 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Estructura[] plataformas;
 
     public Escenario(JFrame jfp) {
-        icono = new ImageIcon("imagenes/fondo1.jpg");
+        icono = new ImageIcon("imagenes/Fondo.png");
         fondo = icono.getImage().getScaledInstance(1200, 700, Image.SCALE_SMOOTH);
         mario = new Personaje(100, 500, "imagenes/mario1.png");
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
-        plataformas = new Estructura[5];
-        plataformas[0] = new Estructura(200, 420, "imagenes/plataforma.png");
-        plataformas[1] = new Estructura(350, 420, "imagenes/plataforma.png");
+        plataformas = new Estructura[100];
+        plataformas[0] = new Estructura(0, 640, "imagenes/plataforma.png");
+        plataformas[1] = new Estructura(500, 640, "imagenes/plataforma.png");
+        plataformas[2] = new Estructura(1000, 640, "imagenes/plataforma.png");
+        plataformas[3] = new Estructura(0, 500, "imagenes/plataformaXL.png");
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
@@ -47,8 +49,8 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
             if (plataformas[i] != null) {
                 plataformas[i].dibujar(g2d);
                 Rectangle rectPlataforma = plataformas[i].getRectangle();
-                g2d.setColor(Color.RED);
-                g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
+                // g2d.setColor(Color.RED);
+                // g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
             }
         }
         mario.dibujar(g2d);
@@ -77,8 +79,8 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
             mario.setVelocidadY(mario.getVelocidadY() + 1);
             mario.setY(mario.getY() + mario.getVelocidadY());
 
-            if (mario.getY() >= 500) {
-                mario.setY(500);
+            if (mario.getY() >= 550) {
+                mario.setY(550);
                 mario.setVelocidadY(0);
                 mario.setSaltando(false);
             }
