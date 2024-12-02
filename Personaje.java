@@ -8,10 +8,10 @@ public class Personaje extends Figura {
     private int avanceX;
     private int velocidadY;
     private boolean saltando;
+    private boolean escalando;
     private final int gravedad = 1;
     private final int alturaSalto = -20;
     private final int suelo = 640;
-    private boolean escalando;
 
     public Personaje(int x, int y, String imag) {
         super(x, y, imag);
@@ -23,16 +23,16 @@ public class Personaje extends Figura {
 
     public void mover() {
         this.x += this.avanceX;
-    
+
         if (this.x > 1100) this.x = 1100;
         if (this.x < 15) this.x = 15;
-    
+
         if (escalando) {
             this.y += this.velocidadY;
         } else if (saltando) {
             this.y += this.velocidadY;
             this.velocidadY += gravedad;
-    
+
             if (this.y >= suelo) {
                 this.y = suelo;
                 this.saltando = false;
@@ -43,44 +43,41 @@ public class Personaje extends Figura {
 
     public void keyPressed(KeyEvent ev) {
         int tecla = ev.getKeyCode();
-    
+
         if (tecla == KeyEvent.VK_RIGHT) {
             this.avanceX = 5;
             cambiarImagen("imagenes/marios1.png");
         }
-    
+
         if (tecla == KeyEvent.VK_LEFT) {
             this.avanceX = -5;
             cambiarImagen("imagenes/marios2.png");
         }
-    
-        if (tecla == KeyEvent.VK_SPACE && !saltando) {
+
+        if (tecla == KeyEvent.VK_SPACE && !saltando && !escalando) {
             this.saltando = true;
             this.velocidadY = alturaSalto;
         }
-    
-        if (escalando) {
-            if (tecla == KeyEvent.VK_UP) {
-                this.velocidadY = -5;
-            }
-    
-            if (tecla == KeyEvent.VK_DOWN) {
-                this.velocidadY = 5;
-            }
+
+        if (tecla == KeyEvent.VK_UP && escalando) {
+            this.velocidadY = -5;
+            cambiarImagen("imagenes/marioEspalda2.png");
+        }
+
+        if (tecla == KeyEvent.VK_DOWN && escalando) {
+            this.velocidadY = 5;
+            cambiarImagen("imagenes/marioEspalda2.png");
         }
     }
 
     public void keyReleased(KeyEvent ev) {
         int tecla = ev.getKeyCode();
-    
         if (tecla == KeyEvent.VK_RIGHT || tecla == KeyEvent.VK_LEFT) {
             this.avanceX = 0;
         }
-    
+
         if (tecla == KeyEvent.VK_UP || tecla == KeyEvent.VK_DOWN) {
-            if (escalando) {
-                this.velocidadY = 0;
-            }
+            this.velocidadY = 0;
         }
     }
 
@@ -123,18 +120,10 @@ public class Personaje extends Figura {
         this.saltando = saltando;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public boolean isEscalando() {
         return escalando;
     }
-    
+
     public void setEscalando(boolean escalando) {
         this.escalando = escalando;
     }
