@@ -21,6 +21,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private JFrame frame;
     private Personaje mario;
     private Estructura[] plataformas;
+    private Escalera[] escaleras;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -30,6 +31,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         this.setVisible(true);
         this.frame = jfp;
         plataformas = new Estructura[65];
+        escaleras = new Escalera[10];
         // estructura inicial
         plataformas[0] = new Estructura(0, 640, "imagenes/Plataformasinicio.png");
         // estructura izquierda
@@ -97,6 +99,9 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         plataformas[57] = new Estructura(   40,  89, "imagenes/bariles.png");
         // mono
         plataformas[58] = new Estructura(   120,  60, "imagenes/Mono.png");
+
+        //escaleras 
+        escaleras[0] = new Escalera(  0,  468, "imagenes/Escalera1.png");
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
@@ -116,12 +121,22 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                 g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
             }
         }
+        for (int i = 0; i < escaleras.length; i++){
+            if (escaleras[i] != null) {
+                escaleras[i].dibujar(g2d);
+                Rectangle rectEscalera = escaleras[i].getRectangle();
+                g2d.setColor(Color.GREEN);
+                g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
+            }
+        }
+
         mario.dibujar(g2d);
         Rectangle rectMario = mario.getRectangle();
         g2d.setColor(Color.BLUE);
         g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
     }
 
+    // funciones del proyecto
     private void verificarColisionConPrincesa() {
         Estructura princesa = plataformas[56]; // Asumiendo que la princesa está en la posición 56
         if (mario.getRectangle().intersects(princesa.getRectangle())) {
@@ -130,41 +145,53 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
             frame = new Principal(2);
         }
     }
+
     public void actionPerformed(ActionEvent e) {
         verificarColisionConPrincesa();
         mario.mover();
         boolean sobreEstructura = false;
 
-        for (Estructura estructura : plataformas) {
-            if (estructura != null && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
-                if (mario.getVelocidadY() > 0 && (mario.getY() + mario.getAlto()) >= estructura.getY()) {
-                    mario.setY(estructura.getY() - mario.getAlto());
+        if (!mario.isEscalando()) {
+            for (Estructura estructura : plataformas) {
+                if (estructura != null && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
+                    if (mario.getVelocidadY() > 0 && (mario.getY() + mario.getAlto()) >= estructura.getY()) {
+                        mario.setY(estructura.getY() - mario.getAlto());
+                        mario.setVelocidadY(0);
+                        mario.setSaltando(false);
+                        sobreEstructura = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!sobreEstructura) {
+                mario.setVelocidadY(mario.getVelocidadY() + 1);
+                mario.setY(mario.getY() + mario.getVelocidadY());
+
+                if (mario.getY() >= 640) {
+                    mario.setY(640);
                     mario.setVelocidadY(0);
                     mario.setSaltando(false);
-                    sobreEstructura = true;
-                    break;
+                }
+            }
+
+            for (Estructura estructura : plataformas) {
+                if (estructura != null && mario.getRectangle().intersects(estructura.getRectangle())) {
+                    if (mario.getVelocidadY() < 0 && mario.getY() <= estructura.getY() + 50) {
+                        mario.setY(estructura.getY() + 50);
+                        mario.setVelocidadY(0);
+                        break;
+                    }
                 }
             }
         }
 
-        if (!sobreEstructura) {
-            mario.setVelocidadY(mario.getVelocidadY() + 1);
-            mario.setY(mario.getY() + mario.getVelocidadY());
-
-            if (mario.getY() >= 640) {
-                mario.setY(640);
-                mario.setVelocidadY(0);
-                mario.setSaltando(false);
-            }
-        }
-
-        for (Estructura estructura : plataformas) {
-            if (estructura != null && mario.getRectangle().intersects(estructura.getRectangle())) {
-                if (mario.getVelocidadY() < 0 && mario.getY() <= estructura.getY() + 50) {
-                    mario.setY(estructura.getY() + 50);
-                    mario.setVelocidadY(0);
-                    break;
-                }
+        for (Escalera escalera : escaleras) {
+            if (escalera != null && escalera.estaEscalando(mario)) {
+                mario.setEscalando(true);
+                break;
+            } else {
+                mario.setEscalando(false);
             }
         }
 

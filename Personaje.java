@@ -11,24 +11,28 @@ public class Personaje extends Figura {
     private final int gravedad = 1;
     private final int alturaSalto = -20;
     private final int suelo = 640;
+    private boolean escalando;
 
     public Personaje(int x, int y, String imag) {
         super(x, y, imag);
         this.avanceX = 0;
         this.velocidadY = 0;
         this.saltando = false;
+        this.escalando = false;
     }
 
     public void mover() {
         this.x += this.avanceX;
-
+    
         if (this.x > 1100) this.x = 1100;
         if (this.x < 15) this.x = 15;
-
-        if (saltando) {
+    
+        if (escalando) {
+            this.y += this.velocidadY;
+        } else if (saltando) {
             this.y += this.velocidadY;
             this.velocidadY += gravedad;
-
+    
             if (this.y >= suelo) {
                 this.y = suelo;
                 this.saltando = false;
@@ -39,27 +43,44 @@ public class Personaje extends Figura {
 
     public void keyPressed(KeyEvent ev) {
         int tecla = ev.getKeyCode();
-
+    
         if (tecla == KeyEvent.VK_RIGHT) {
             this.avanceX = 5;
             cambiarImagen("imagenes/marios1.png");
         }
-
+    
         if (tecla == KeyEvent.VK_LEFT) {
             this.avanceX = -5;
             cambiarImagen("imagenes/marios2.png");
         }
-
+    
         if (tecla == KeyEvent.VK_SPACE && !saltando) {
             this.saltando = true;
             this.velocidadY = alturaSalto;
+        }
+    
+        if (escalando) {
+            if (tecla == KeyEvent.VK_UP) {
+                this.velocidadY = -5;
+            }
+    
+            if (tecla == KeyEvent.VK_DOWN) {
+                this.velocidadY = 5;
+            }
         }
     }
 
     public void keyReleased(KeyEvent ev) {
         int tecla = ev.getKeyCode();
+    
         if (tecla == KeyEvent.VK_RIGHT || tecla == KeyEvent.VK_LEFT) {
             this.avanceX = 0;
+        }
+    
+        if (tecla == KeyEvent.VK_UP || tecla == KeyEvent.VK_DOWN) {
+            if (escalando) {
+                this.velocidadY = 0;
+            }
         }
     }
 
@@ -108,5 +129,13 @@ public class Personaje extends Figura {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean isEscalando() {
+        return escalando;
+    }
+    
+    public void setEscalando(boolean escalando) {
+        this.escalando = escalando;
     }
 }
