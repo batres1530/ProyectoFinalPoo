@@ -22,6 +22,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
+    private int nivel;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
