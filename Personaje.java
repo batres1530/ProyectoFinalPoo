@@ -12,6 +12,7 @@ public class Personaje extends Figura {
     private final int gravedad = 1;
     private final int alturaSalto = -20;
     private final int suelo = 640;
+    private int ultimaPosicionY;
 
     public Personaje(int x, int y, String imag) {
         super(x, y, imag);
@@ -19,6 +20,7 @@ public class Personaje extends Figura {
         this.velocidadY = 0;
         this.saltando = false;
         this.escalando = false;
+        this.ultimaPosicionY = y;
     }
 
     public void mover() {
@@ -29,6 +31,11 @@ public class Personaje extends Figura {
 
         if (escalando) {
             this.y += this.velocidadY;
+            // Si baja más allá de la última posición permitida, restablece la posición
+            if (this.y > ultimaPosicionY) {
+                this.y = ultimaPosicionY;
+                this.velocidadY = 0; // Detener el movimiento vertical
+            }
         } else if (saltando) {
             this.y += this.velocidadY;
             this.velocidadY += gravedad;
@@ -126,5 +133,13 @@ public class Personaje extends Figura {
 
     public void setEscalando(boolean escalando) {
         this.escalando = escalando;
+    }
+
+    public void guardarUltimaPosicionY(int y) {
+        this.ultimaPosicionY = y;
+    }
+
+    public int getUltimaPosicionY() {
+        return ultimaPosicionY;
     }
 }
