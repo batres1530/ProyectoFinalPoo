@@ -22,7 +22,6 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
-    private int nivel;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -89,7 +88,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         plataformas[53] = new Estructura(896, 161, "imagenes/plataformade3.png");
         plataformas[54] = new Estructura(960, 164, "imagenes/plataformade3.png");
         plataformas[55] = new Estructura(1024, 167, "imagenes/plataformade3.png");
-        plataformas[56] = new Estructura(485, 0, "imagenes/princesa.png");
+        plataformas[56] = new Estructura(110, 590, "imagenes/princesa.png");
         plataformas[57] = new Estructura(40, 89, "imagenes/bariles.png");
         plataformas[58] = new Estructura(120, 60, "imagenes/Mono.png");
         escaleras[0] = new Escalera(900, 470, "imagenes/Escalera1.png");

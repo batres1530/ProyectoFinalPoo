@@ -7,13 +7,13 @@ public class Principal extends JFrame {
     public Principal(int nivel) {
         switch (nivel) {
             case 1:
-                esc = new Escenario(this);
-                this.add(esc);
+                esc2 = new Escenario2(this);
+                this.add(esc2);
                 break;
 
             case 2:
-                esc2 = new Escenario2(this);
-                this.add(esc2);
+                esc = new Escenario(this);
+                this.add(esc);
                 break;
         }
         this.setSize(1200, 730);
