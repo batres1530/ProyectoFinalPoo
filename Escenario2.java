@@ -168,7 +168,7 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
     }
 
     private void verificarColisionConPrincesa() {
-        Estructura princesa = plataformas[56];
+        Estructura princesa = plataformas[65];
         if (mario.getRectangle().intersects(princesa.getRectangle())) {
             t.stop();
             frame.dispose();

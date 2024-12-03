@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 
-public class Escenario3 extends JPanel implements ActionListener, KeyListener {
+public class Escenario4 extends JPanel implements ActionListener, KeyListener {
     private ImageIcon icono;
     private Image fondo;
     private Timer t;
@@ -23,7 +23,7 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
     private Estructura[] plataformas;
     private Escalera[] escaleras;
 
-    public Escenario3(JFrame jfp) {
+    public Escenario4(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
         fondo = icono.getImage().getScaledInstance(1200, 700, Image.SCALE_SMOOTH);
         mario = new Personaje(100, 500, "imagenes/marios1.png");
@@ -33,67 +33,67 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
         plataformas = new Estructura[65];
         escaleras = new Escalera[15];
        
-        plataformas[0] = new Estructura(65, 680, "imagenes/plataformade34.png");
-        plataformas[1] = new Estructura(125, 678, "imagenes/plataformade34.png");
-        plataformas[2] = new Estructura(185, 676, "imagenes/plataformade34.png");
-        plataformas[3] = new Estructura(245, 674, "imagenes/plataformade34.png");
-        plataformas[4] = new Estructura(305, 672, "imagenes/plataformade34.png");
-        plataformas[5] = new Estructura(365, 670, "imagenes/plataformade34.png");
-        plataformas[6] = new Estructura(425, 668, "imagenes/plataformade34.png");
-        plataformas[7] = new Estructura(485, 666, "imagenes/plataformade34.png");
-        plataformas[8] = new Estructura(545, 664, "imagenes/plataformade34.png");
-        plataformas[9] = new Estructura(605, 662, "imagenes/plataformade34.png");
-        plataformas[10] = new Estructura(665, 660, "imagenes/plataformade34.png");
-        plataformas[11] = new Estructura(725, 658, "imagenes/plataformade34.png");
-        plataformas[12] = new Estructura(785, 656, "imagenes/plataformade34.png");
-        plataformas[13] = new Estructura(845, 654, "imagenes/plataformade34.png");
-        plataformas[14] = new Estructura(905, 654, "imagenes/plataformade34.png");
-        plataformas[15] = new Estructura(965, 654, "imagenes/plataformade34.png");
-        plataformas[16] = new Estructura(1025, 654, "imagenes/plataformade34.png");
+        plataformas[0] = new Estructura(65, 680, "imagenes/plataformade33.png");
+        plataformas[1] = new Estructura(125, 678, "imagenes/plataformade33.png");
+        plataformas[2] = new Estructura(185, 676, "imagenes/plataformade33.png");
+        plataformas[3] = new Estructura(245, 674, "imagenes/plataformade33.png");
+        plataformas[4] = new Estructura(305, 672, "imagenes/plataformade33.png");
+        plataformas[5] = new Estructura(365, 670, "imagenes/plataformade33.png");
+        plataformas[6] = new Estructura(425, 668, "imagenes/plataformade33.png");
+        plataformas[7] = new Estructura(485, 666, "imagenes/plataformade33.png");
+        plataformas[8] = new Estructura(545, 664, "imagenes/plataformade33.png");
+        plataformas[9] = new Estructura(605, 662, "imagenes/plataformade33.png");
+        plataformas[10] = new Estructura(665, 660, "imagenes/plataformade33.png");
+        plataformas[11] = new Estructura(725, 658, "imagenes/plataformade33.png");
+        plataformas[12] = new Estructura(785, 656, "imagenes/plataformade33.png");
+        plataformas[13] = new Estructura(845, 654, "imagenes/plataformade33.png");
+        plataformas[14] = new Estructura(905, 654, "imagenes/plataformade33.png");
+        plataformas[15] = new Estructura(965, 654, "imagenes/plataformade33.png");
+        plataformas[16] = new Estructura(1025, 654, "imagenes/plataformade33.png");
         // Plataformas dsos
-        plataformas[17] = new Estructura(905, 500, "imagenes/plataformade34.png");
-        plataformas[18] = new Estructura(845, 500, "imagenes/plataformade34.png");
-        plataformas[19] = new Estructura(785, 500, "imagenes/plataformade34.png");
-        plataformas[20] = new Estructura(725, 499, "imagenes/plataformade34.png");
-        plataformas[21] = new Estructura(665, 498, "imagenes/plataformade34.png");
-        plataformas[22] = new Estructura(605, 497, "imagenes/plataformade34.png");
-        plataformas[23] = new Estructura(545, 496, "imagenes/plataformade34.png");
-        plataformas[24] = new Estructura(485, 495, "imagenes/plataformade34.png");
-        plataformas[25] = new Estructura(425, 494, "imagenes/plataformade34.png");
-        plataformas[26] = new Estructura(365, 493 ,"imagenes/plataformade34.png");
-        plataformas[27] = new Estructura(305, 492, "imagenes/plataformade34.png");
-        plataformas[28] = new Estructura(245, 491, "imagenes/plataformade34.png");
-        plataformas[29] = new Estructura(185, 490, "imagenes/plataformade34.png");
-        plataformas[30] = new Estructura(125, 489, "imagenes/plataformade34.png");
-        plataformas[31] = new Estructura(65, 488, "imagenes/plataformade34.png");
-        plataformas[32] = new Estructura(5, 487, "imagenes/plataformade34.png");
+        plataformas[17] = new Estructura(905, 500, "imagenes/plataformade33.png");
+        plataformas[18] = new Estructura(845, 500, "imagenes/plataformade33.png");
+        plataformas[19] = new Estructura(785, 500, "imagenes/plataformade33.png");
+        plataformas[20] = new Estructura(725, 499, "imagenes/plataformade33.png");
+        plataformas[21] = new Estructura(665, 498, "imagenes/plataformade33.png");
+        plataformas[22] = new Estructura(605, 497, "imagenes/plataformade33.png");
+        plataformas[23] = new Estructura(545, 496, "imagenes/plataformade33.png");
+        plataformas[24] = new Estructura(485, 495, "imagenes/plataformade33.png");
+        plataformas[25] = new Estructura(425, 494, "imagenes/plataformade33.png");
+        plataformas[26] = new Estructura(365, 493 ,"imagenes/plataformade33.png");
+        plataformas[27] = new Estructura(305, 492, "imagenes/plataformade33.png");
+        plataformas[28] = new Estructura(245, 491, "imagenes/plataformade33.png");
+        plataformas[29] = new Estructura(185, 490, "imagenes/plataformade33.png");
+        plataformas[30] = new Estructura(125, 489, "imagenes/plataformade33.png");
+        plataformas[31] = new Estructura(65, 488, "imagenes/plataformade33.png");
+        plataformas[32] = new Estructura(5, 487, "imagenes/plataformade33.png");
 
         // plataforma tres
-        plataformas[33] = new Estructura(50, 327, "imagenes/plataformade34.png");
-        plataformas[34] = new Estructura(110, 326, "imagenes/plataformade34.png");
-        plataformas[35] = new Estructura(170, 325, "imagenes/plataformade34.png");
-        plataformas[36] = new Estructura(230, 324, "imagenes/plataformade34.png");
-        plataformas[37] = new Estructura(290, 323, "imagenes/plataformade34.png");
-        plataformas[38] = new Estructura(350, 322, "imagenes/plataformade34.png");
-        plataformas[39] = new Estructura(410, 321, "imagenes/plataformade34.png");        
-        plataformas[40] = new Estructura(470, 320, "imagenes/plataformade34.png");
-        plataformas[41] = new Estructura(530, 319, "imagenes/plataformade34.png");
-        plataformas[42] = new Estructura(590, 318, "imagenes/plataformade34.png");    
-        plataformas[43] = new Estructura(650, 318, "imagenes/plataformade34.png");
-        plataformas[44] = new Estructura(710, 318, "imagenes/plataformade34.png");
-        plataformas[45] = new Estructura(770, 318, "imagenes/plataformade34.png");
-        plataformas[46] = new Estructura(830, 318, "imagenes/plataformade34.png");
-        plataformas[47] = new Estructura(890, 318, "imagenes/plataformade34.png");        
-        plataformas[48] = new Estructura(950, 318, "imagenes/plataformade34.png");
-        plataformas[49] = new Estructura(1010, 318, "imagenes/plataformade34.png");
-        plataformas[59] = new Estructura( 1070, 318, "imagenes/plataformade34.png");
-        plataformas[60] = new Estructura( 1090, 318, "imagenes/plataformade34.png");
+        plataformas[33] = new Estructura(50, 327, "imagenes/plataformade33.png");
+        plataformas[34] = new Estructura(110, 326, "imagenes/plataformade33.png");
+        plataformas[35] = new Estructura(170, 325, "imagenes/plataformade33.png");
+        plataformas[36] = new Estructura(230, 324, "imagenes/plataformade33.png");
+        plataformas[37] = new Estructura(290, 323, "imagenes/plataformade33.png");
+        plataformas[38] = new Estructura(350, 322, "imagenes/plataformade33.png");
+        plataformas[39] = new Estructura(410, 321, "imagenes/plataformade33.png");        
+        plataformas[40] = new Estructura(470, 320, "imagenes/plataformade33.png");
+        plataformas[41] = new Estructura(530, 319, "imagenes/plataformade33.png");
+        plataformas[42] = new Estructura(590, 318, "imagenes/plataformade33.png");    
+        plataformas[43] = new Estructura(650, 318, "imagenes/plataformade33.png");
+        plataformas[44] = new Estructura(710, 318, "imagenes/plataformade33.png");
+        plataformas[45] = new Estructura(770, 318, "imagenes/plataformade33.png");
+        plataformas[46] = new Estructura(830, 318, "imagenes/plataformade33.png");
+        plataformas[47] = new Estructura(890, 318, "imagenes/plataformade33.png");        
+        plataformas[48] = new Estructura(950, 318, "imagenes/plataformade33.png");
+        plataformas[49] = new Estructura(1010, 318, "imagenes/plataformade33.png");
+        plataformas[59] = new Estructura( 1070, 318, "imagenes/plataformade33.png");
+        plataformas[60] = new Estructura( 1090, 318, "imagenes/plataformade33.png");
         // plataforma 4
-        plataformas[50] = new Estructura( 460, 158, "imagenes/plataformade34.png");
-        plataformas[51] = new Estructura( 520, 158, "imagenes/plataformade34.png");
-        plataformas[52] = new Estructura( 580, 158, "imagenes/plataformade34.png");
-        plataformas[53] = new Estructura( 640, 158, "imagenes/plataformade34.png");
-        plataformas[54] = new Estructura( 700, 158, "imagenes/plataformade34.png");
+        plataformas[50] = new Estructura( 460, 158, "imagenes/plataformade33.png");
+        plataformas[51] = new Estructura( 520, 158, "imagenes/plataformade33.png");
+        plataformas[52] = new Estructura( 580, 158, "imagenes/plataformade33.png");
+        plataformas[53] = new Estructura( 640, 158, "imagenes/plataformade33.png");
+        plataformas[54] = new Estructura( 700, 158, "imagenes/plataformade33.png");
        
         plataformas[56] = new Estructura( 485, 97, "imagenes/princesa.png");
         plataformas[57] = new Estructura(1080, 250, "imagenes/bariles.png");
