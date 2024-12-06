@@ -172,7 +172,7 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         if (mario.getRectangle().intersects(princesa.getRectangle())) {
             t.stop();
             frame.dispose();
-            frame = new Principal(2);
+            frame = new Principal(3);
         }
     }
 

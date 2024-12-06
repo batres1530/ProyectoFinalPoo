@@ -29,6 +29,14 @@ public class Principal extends JFrame {
             case 4:
                 esc4 = new Escenario4(this);
                 this.add(esc4);
+                break;
+            case 5:
+                esc5 = new Escenario5(this);
+                this.add(esc5);
+                break;
+            case 6:
+                esc6 = new Escenario6(this);
+                this.add(esc6);
                 break;       
            
         }
@@ -39,6 +47,6 @@ public class Principal extends JFrame {
     }
 
     public static void main(String args[]) {
-        Principal p = new Principal(1);
+        new Inicio();
     }
 }
