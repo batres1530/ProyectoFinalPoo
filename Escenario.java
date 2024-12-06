@@ -91,19 +91,24 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         plataformas[55] = new Estructura(1024, 167, "imagenes/plataformade3.png");
         plataformas[56] = new Estructura(485, 0, "imagenes/princesa.png");
         plataformas[57] = new Estructura(40, 89, "imagenes/bariles.png");
-        plataformas[58] = new Estructura(120, 60, "imagenes/Mono.png");
         escaleras[0] = new Escalera(900, 470, "imagenes/Escalera1.png");
         escaleras[1] = new Escalera(200, 310, "imagenes/Escalera1.png");
         escaleras[2] = new Escalera(900, 160, "imagenes/Escalera1.png");
+        escaleras[3] = new Escalera(120, 60, "imagenes/Mono.png");
 
-        barriles = new Barril[2];
-        barriles[0] = new Barril(100, 100, "imagenes/barrilE.png");
-        barriles[1] = new Barril(200, 100, "imagenes/barrilE.png");
+        barriles = new Barril[10];
+        barriles[0] = new Barril(100, 140, "imagenes/barrilE.png");
+        barriles[1] = new Barril(200, 140, "imagenes/barrilE.png");
+
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
+    }
+    public void actualizar() {
+        mario.mover(); // Mueve a Mario
+        mario.moverBalas(); // Mueve las balas disparadas
     }
 
     public void paint(Graphics g) {
@@ -140,6 +145,12 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         Rectangle rectMario = mario.getRectangle();
         g2d.setColor(Color.BLUE);
         g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
+        
+         // Dibuja las balas
+        for (Bala bala : mario.getBalas()) {
+        bala.dibujar(g2d); // Asumiendo que cada bala tiene un método dibujar
+    }
+
     }
 
     private void verificarColisionConPrincesa() {
@@ -154,6 +165,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         verificarColisionConPrincesa();
         mario.mover();
+        mario.moverBalas();
         
         boolean sobreEstructura = false;
     
@@ -221,6 +233,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
 
     public void keyPressed(KeyEvent e) {
         this.mario.keyPressed(e);
+       
     }
 
     public void keyReleased(KeyEvent e) {
@@ -229,4 +242,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
 
     public void keyTyped(KeyEvent e) {
     }
+
+
+
 }

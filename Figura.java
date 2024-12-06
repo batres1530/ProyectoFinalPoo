@@ -14,6 +14,7 @@ public class Figura {
     protected ImageIcon icono;
     protected Rectangle rect;
     protected String imag;
+    protected boolean estadoBala1;
 
     public Figura(int x, int y, String imag) {  
         this.x = x;
@@ -24,6 +25,7 @@ public class Figura {
         this.visible = 1;
         this.ancho = this.icono.getIconWidth();
         this.alto = this.icono.getIconHeight();
+        this.estadoBala1=true;
     }
     
     public void setX(int x) {
@@ -90,6 +92,11 @@ public class Figura {
         this.rect = new Rectangle(this.x, this.y, this.ancho, this.alto);
         return this.rect.intersects(r);
     }
+    // metodos de las balas
+    public void setEstadoBala1(boolean e) {
+        this.estadoBala1 = e;
+    }
+
     
     public void dibujar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
