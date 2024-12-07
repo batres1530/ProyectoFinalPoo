@@ -10,9 +10,14 @@ public class Personaje extends Figura {
     private boolean saltando;
     private boolean escalando;
     private final int gravedad = 1;
-    private final int alturaSalto = -20;
+    private final int alturaSalto = -20; // hay que poner el salto con otra tecla y  con otra imagen 
     private final int suelo = 640;
     private int ultimaPosicionY;
+    private Bala[] balas; // Arreglo de balas
+    private int contadorBalas; // Contador de balas
+    private final int maxBalas = 10; // aqui hay que poner las balas de mario yo digo que unas 10
+    private int direccion; // 1 para derecha, -1 para izquierda
+
 
     public Personaje(int x, int y, String imag) {
         super(x, y, imag);
@@ -21,7 +26,38 @@ public class Personaje extends Figura {
         this.saltando = false;
         this.escalando = false;
         this.ultimaPosicionY = y;
+        this.balas = new Bala[maxBalas];
+        this.contadorBalas = 0;
+
+        for (int i = 0; i < maxBalas; i++) {
+            balas[i] = new Bala(-1000, -1000); // Posición inicial fuera de pantalla
+            balas[i].setEstadoBala1(false);
+        }
     }
+    public void disparar() {
+        if (contadorBalas < maxBalas) {
+            Bala bala = balas[contadorBalas];
+            bala.setX(this.x + this.ancho / 2 - 20); // Posición inicial de la bala
+            bala.setY(this.y + this.alto / 2- 15);
+            bala.setDireccion(this.direccion);
+            bala.estadoBala1 = true; // Activa la bala
+        contadorBalas++;
+        } else {
+            contadorBalas = 0; // Reinicia el contador si se supera el límite
+        }
+    }
+    public void moverBalas() {
+        for (Bala bala : balas) {
+            if (bala.estadoBala1) {
+                bala.mover(); // Mueve la bala jjjjjjjjjj
+            }
+        }
+    }
+    // metodo getblalas
+    public Bala[] getBalas() {
+        return this.balas;
+    }
+    
 
     public void mover() {
         this.x += this.avanceX;
@@ -54,16 +90,23 @@ public class Personaje extends Figura {
         if (tecla == KeyEvent.VK_RIGHT) {
             this.avanceX = 5;
             cambiarImagen("imagenes/marios1.png");
+            this.direccion = 1;
         }
 
         if (tecla == KeyEvent.VK_LEFT) {
             this.avanceX = -5;
             cambiarImagen("imagenes/marios2.png");
+            this.direccion = -1;
         }
-
-        if (tecla == KeyEvent.VK_SPACE && !saltando && !escalando) {
-            this.saltando = true;
-            this.velocidadY = alturaSalto;
+        // aqui salta
+        // if (tecla == KeyEvent.VK_SPACE && !saltando && !escalando) {
+        //     this.saltando = true;
+        //     this.velocidadY = alturaSalto;
+        // }
+        
+        // disparo de balas
+        if (tecla == KeyEvent.VK_SPACE) {
+            disparar(); // Dispara una bala cuando se presiona ESPACIO
         }
 
         if (tecla == KeyEvent.VK_UP && escalando) {
@@ -73,7 +116,7 @@ public class Personaje extends Figura {
 
         if (tecla == KeyEvent.VK_DOWN && escalando) {
             this.velocidadY = 5;
-            cambiarImagen("imagenes/marioEspalda2.png");
+            cambiarImagen("imagenes/marioEspalda2.png"); // aqui son los controles de mario
         }
     }
 
