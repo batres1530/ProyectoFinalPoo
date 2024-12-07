@@ -248,6 +248,16 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
                 mario.setEscalando(false);
             }
         }
+
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.mover(plataformas);
+                if (mario.getRectangle().intersects(barril.getRectangle())) {
+                    barril.setVisible(false);
+                    barril.setX(3000);
+                }
+            }
+        }
     
         repaint();
     }
