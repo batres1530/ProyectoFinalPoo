@@ -98,14 +98,14 @@ public class Personaje extends Figura {
             cambiarImagen("imagenes/marios2.png");
             this.direccion = -1;
         }
-        // aqui salta
-        // if (tecla == KeyEvent.VK_SPACE && !saltando && !escalando) {
-        //     this.saltando = true;
-        //     this.velocidadY = alturaSalto;
-        // }
+       
+        if (tecla == KeyEvent.VK_SPACE && !saltando && !escalando) {
+            this.saltando = true;
+            this.velocidadY = alturaSalto;
+        }
         
         // disparo de balas
-        if (tecla == KeyEvent.VK_SPACE) {
+        if (tecla == KeyEvent.VK_C) {
             disparar(); // Dispara una bala cuando se presiona ESPACIO
         }
 

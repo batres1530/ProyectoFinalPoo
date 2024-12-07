@@ -99,6 +99,12 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         barriles = new Barril[10];
         barriles[0] = new Barril(100, 140, "imagenes/barrilE.png");
         barriles[1] = new Barril(200, 140, "imagenes/barrilE.png");
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.cambiarDireccion(false);
+                barril.setAtraviesaPlataformas(false);
+            }
+        }
 
         t = new Timer(16, null);
         t.addActionListener(this);
