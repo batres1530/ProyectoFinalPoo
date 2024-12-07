@@ -6,7 +6,7 @@ public class Bala extends Figura {
 
     // Constructor
     public Bala(int x, int y) {
-        super(x, y, "imagenes/bala.png"); // Aquí va la imagen de la bala
+        super(x, y, "imagenes/boladejuego.png"); // Aquí va la imagen de la bala
         this.direccion = 1; // Por defecto, la bala se moverá hacia la derecha
         this.estadoBala1 = false; 
     }

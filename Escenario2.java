@@ -103,7 +103,7 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         
         // princesa
         plataformas[65] = new Estructura(700, 108, "imagenes/princesa.png");
-        plataformas[66] = new Estructura(450, 108, "imagenes/bariles.png");
+        plataformas[66] = new Estructura(450, 103, "imagenes/bariles.png");
         plataformas[67] = new Estructura(550, 75, "imagenes/Mono.png");
         //escaleraderecha
         escaleras[0] = new Escalera(1067, 485, "imagenes/Escalera1.png");
@@ -126,9 +126,9 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         // escalera derecha
         escaleras[12] = new Escalera(980, 170, "imagenes/Escalera1.png");
         // escaleras 4 
-        escaleras[13] = new Escalera(350, 35, "imagenes/palos1.png");
+        escaleras[13] = new Escalera(350, 42, "imagenes/palos1.png");
         // escaleras 5
-        escaleras[14] = new Escalera(780, 35, "imagenes/palos1.png");
+        escaleras[14] = new Escalera(780, 42, "imagenes/palos1.png");
         
 
         // escaleras[3] = new Escalera(500, 500, "imagenes/Escalera2.png");
