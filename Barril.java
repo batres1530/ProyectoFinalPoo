@@ -49,6 +49,38 @@ public class Barril extends Figura {
         }
     }
 
+    public void moverIzquierda(Estructura[] plataformas) {
+        if (visible) {
+            this.x -= this.velocidadX; // velocidadX es negativo, por lo que se mueve hacia la izquierda
+    
+            if (!atraviesaPlataformas) {
+                boolean sobrePlataforma = false;
+                for (Estructura plataforma : plataformas) {
+                    if (plataforma != null && this.getRectangle().intersects(plataforma.getRectangle())) {
+                        if (this.velocidadY > 0 && (this.y + this.img.getHeight(null)) >= plataforma.getY()) {
+                            this.y = plataforma.getY() - this.img.getHeight(null);
+                            this.velocidadY = 0;
+                            sobrePlataforma = true;
+                            break;
+                        }
+                    }
+                }
+    
+                if (!sobrePlataforma) {
+                    this.velocidadY += gravedad;
+                    this.y += this.velocidadY;
+                }
+            } else {
+                this.y += this.velocidadY;
+            }
+    
+            // Reiniciar posición si el barril sale del lado izquierdo
+            if (this.x > 1200 || this.x < 0) {
+                this.velocidadX = -this.velocidadX;
+            }
+        }
+    }
+
     public void cambiarDireccion(boolean haciaAbajo) {
         if (haciaAbajo) {
             this.velocidadX = 0;

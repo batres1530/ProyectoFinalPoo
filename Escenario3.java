@@ -22,6 +22,10 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
+    private static final int MAX_BARRILES = 30; // Número máximo de barriles
+    private Barril[] barriles; // Arreglo de barriles
+    private Timer timerBarriles; // Temporizadores
+    private int indiceBarrilActual = 0; 
 
     public Escenario3(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -111,12 +115,42 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
         escaleras[7] = new Escalera(400, 360, "imagenes/Escalera2.png"); // no se si van a cambiar las imagenes
         escaleras[9] = new Escalera(630, 500, "imagenes/Escalera1.png");
         escaleras[10] = new Escalera(200, 530, "imagenes/Escalera2.png");
-       
+
+        barriles = new Barril[MAX_BARRILES];
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.cambiarDireccion(false);
+                barril.setAtraviesaPlataformas(false);
+            }
+        }
+
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
+
+        timerBarriles = new Timer(2000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarBarril();
+            }
+        });
+        timerBarriles.start();
+    }
+
+    private void generarBarril() {
+        // Busca un espacio disponible en el arreglo de barriles
+        for (int i = 0; i < MAX_BARRILES; i++) {
+            int indice = (indiceBarrilActual + i) % MAX_BARRILES; // Búsqueda circular
+            if (barriles[indice] == null) {
+                // Genera un nuevo barril en la posición deseada
+                barriles[indice] = new Barril(960, 220, "imagenes/barrilE.png");
+                barriles[indice].cambiarDireccion(false); //cambiar a true en los niveles que caen
+                barriles[indice].setAtraviesaPlataformas(false);
+                indiceBarrilActual = (indice + 1) % MAX_BARRILES;
+                break;
+            }
+        }
     }
 
     public void paint(Graphics g) {
@@ -137,6 +171,15 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
                 Rectangle rectEscalera = escaleras[i].getRectangle();
                 g2d.setColor(Color.GREEN);
                 g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
+            }
+        }
+
+        for (int i = 0; i < barriles.length; i++){
+            if (barriles[i] != null) {
+                barriles[i].dibujar(g2d);
+                Rectangle rectBarril = barriles[i].getRectangle();
+                g2d.setColor(Color.YELLOW);
+                g2d.drawRect(rectBarril.x, rectBarril.y, rectBarril.width, rectBarril.height);
             }
         }
 
@@ -208,6 +251,16 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
                 break;
             } else {
                 mario.setEscalando(false);
+            }
+        }
+
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.moverIzquierda(plataformas);
+                if (mario.getRectangle().intersects(barril.getRectangle())) {
+                    barril.setVisible(false);
+                    barril.setX(3000);
+                }
             }
         }
     

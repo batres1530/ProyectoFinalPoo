@@ -25,7 +25,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private static final int MAX_BARRILES = 30; // Número máximo de barriles
     private Barril[] barriles; // Arreglo de barriles
     private Timer timerBarriles; // Temporizadores
-    private int indiceBarrilActual = 0; // Índice actual para controlar dónde colocar el nuevo barril
+    private int indiceBarrilActual = 0; 
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
