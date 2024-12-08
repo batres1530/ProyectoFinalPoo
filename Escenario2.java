@@ -22,6 +22,7 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
+    private Barril[] barriles;
 
     public Escenario2(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -129,8 +130,15 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         escaleras[13] = new Escalera(350, 42, "imagenes/palos1.png");
         // escaleras 5
         escaleras[14] = new Escalera(780, 42, "imagenes/palos1.png");
-        
-
+        barriles = new Barril[2];
+        barriles[0] = new Barril(100, 140, "imagenes/barrilE.png");
+        barriles[1] = new Barril(200, 140, "imagenes/barrilE.png");
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.cambiarDireccion(true);
+                barril.setAtraviesaPlataformas(true);
+            }
+        }
         // escaleras[3] = new Escalera(500, 500, "imagenes/Escalera2.png");
         
         t = new Timer(16, null);
@@ -158,6 +166,15 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
                 Rectangle rectEscalera = escaleras[i].getRectangle();
                 g2d.setColor(Color.GREEN);
                 g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
+            }
+        }
+        for(int i = 0; i < barriles.length; i++) {
+            if (barriles[i] != null) {
+                barriles[i].mover(plataformas);
+                barriles[i].dibujar(g2d);
+                Rectangle rectBarril = barriles[i].getRectangle();
+                g2d.setColor(Color.YELLOW);
+                g2d.drawRect(rectBarril.x, rectBarril.y, rectBarril.width, rectBarril.height);
             }
         }
 
@@ -229,6 +246,16 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
                 break;
             } else {
                 mario.setEscalando(false);
+            }
+        }
+
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.mover(plataformas);
+                if (mario.getRectangle().intersects(barril.getRectangle())) {
+                    barril.setVisible(false);
+                    barril.setX(3000);
+                }
             }
         }
     

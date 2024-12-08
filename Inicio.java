@@ -83,7 +83,7 @@ public class Inicio extends JFrame
         });
         
         this.setVisible(true);
-        this.setSize(1200,800);
+        this.setSize(1200,700);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
