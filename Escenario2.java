@@ -22,7 +22,11 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
-    private Barril[] barriles;
+    private int[] posicionesFijasX = {100, 300, 500, 700, 900};
+    private static final int MAX_BARRILES = 30;
+    private Barril[] barriles; 
+    private Timer timerBarriles; 
+    private int indiceBarrilActual = 0;
 
     public Escenario2(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -130,9 +134,8 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         escaleras[13] = new Escalera(350, 42, "imagenes/palos1.png");
         // escaleras 5
         escaleras[14] = new Escalera(780, 42, "imagenes/palos1.png");
-        barriles = new Barril[2];
-        barriles[0] = new Barril(100, 140, "imagenes/barrilE.png");
-        barriles[1] = new Barril(200, 140, "imagenes/barrilE.png");
+        barriles = new Barril[MAX_BARRILES];
+        
         for (Barril barril : barriles) {
             if (barril != null) {
                 barril.cambiarDireccion(true);
@@ -146,6 +149,30 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
+
+        timerBarriles = new Timer(500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarBarril();
+            }
+        });
+        timerBarriles.start();
+    }
+
+    private void generarBarril() {
+        // Busca un espacio disponible en el arreglo de barriles
+        for (int i = 0; i < barriles.length; i++) {
+            int indice = (indiceBarrilActual + i) % MAX_BARRILES;
+            if (barriles[i] == null) {
+                int x = posicionesFijasX[indiceBarrilActual];
+                int y = 50; // Posición inicial en Y
+                barriles[indice] = new Barril(x, y, "imagenes/barrilE.png");
+                barriles[indice].setVisible(true);
+                barriles[indice].cambiarDireccion(true);
+                barriles[indice].setAtraviesaPlataformas(true);
+                indiceBarrilActual = (indiceBarrilActual + 1) % posicionesFijasX.length; // Ciclar posiciones fijas
+                break;
+            }
+        }
     }
 
     public void paint(Graphics g) {
