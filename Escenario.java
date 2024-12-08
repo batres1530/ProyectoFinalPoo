@@ -22,7 +22,10 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
-    private Barril[] barriles;
+    private static final int MAX_BARRILES = 30; // Número máximo de barriles
+    private Barril[] barriles; // Arreglo de barriles
+    private Timer timerBarriles; // Temporizadores
+    private int indiceBarrilActual = 0; // Índice actual para controlar dónde colocar el nuevo barril
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -31,7 +34,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
-        plataformas = new Estructura[65];
+        plataformas = new Estructura[85];
         escaleras = new Escalera[10];
         plataformas[0] = new Estructura(0, 640, "imagenes/Plataformasinicio.png");
         plataformas[1] = new Estructura(0, 468, "imagenes/plataformade3.png");
@@ -96,9 +99,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         escaleras[2] = new Escalera(900, 160, "imagenes/Escalera1.png");
         escaleras[3] = new Escalera(120, 60, "imagenes/Mono.png");
 
-        barriles = new Barril[10];
-        barriles[0] = new Barril(100, 140, "imagenes/barrilE.png");
-        barriles[1] = new Barril(200, 140, "imagenes/barrilE.png");
+        barriles = new Barril[MAX_BARRILES];
         for (Barril barril : barriles) {
             if (barril != null) {
                 barril.cambiarDireccion(false);
@@ -111,7 +112,31 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
+
+        // Inicialización del temporizador para generar barriles
+        timerBarriles = new Timer(2000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarBarril();
+            }
+        });
+        timerBarriles.start();
     }
+
+    private void generarBarril() {
+        // Busca un espacio disponible en el arreglo de barriles
+        for (int i = 0; i < MAX_BARRILES; i++) {
+            int indice = (indiceBarrilActual + i) % MAX_BARRILES; // Búsqueda circular
+            if (barriles[indice] == null) {
+                // Genera un nuevo barril en la posición deseada
+                barriles[indice] = new Barril(100, 140, "imagenes/barrilE.png");
+                barriles[indice].cambiarDireccion(false); //cambiar a true en los niveles que caen
+                barriles[indice].setAtraviesaPlataformas(false);
+                indiceBarrilActual = (indice + 1) % MAX_BARRILES;
+                break;
+            }
+        }
+    }
+
     public void actualizar() {
         mario.mover(); // Mueve a Mario
         mario.moverBalas(); // Mueve las balas disparadas

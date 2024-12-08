@@ -10,7 +10,7 @@ public class Personaje extends Figura {
     private boolean saltando;
     private boolean escalando;
     private final int gravedad = 1;
-    private final int alturaSalto = -20; // hay que poner el salto con otra tecla y  con otra imagen 
+    private final int alturaSalto = -12; // hay que poner el salto con otra tecla y  con otra imagen 
     private final int suelo = 640;
     private int ultimaPosicionY;
     private Bala[] balas; // Arreglo de balas
