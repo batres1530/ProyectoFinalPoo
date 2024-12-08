@@ -70,7 +70,7 @@ public class Inicio extends JFrame
             {
                 musica.detener();
                 dispose(); //Quita visualmente el inicio
-                new Principal(3);
+                new Principal(1);
             }
         });
         
