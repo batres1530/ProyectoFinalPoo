@@ -70,8 +70,8 @@ public class Escenario5 extends JPanel implements ActionListener, KeyListener {
         escaleras[7] = new Escalera(400, 180, "imagenes/Escalera1.png");
         escaleras[8] = new Escalera(700, 180, "imagenes/Escalera1.png");
         escaleras[9] = new Escalera(1000, 180, "imagenes/Escalera1.png");
-        escaleras[10] = new Escalera(750, 25, "imagenes/Escalera1.png");
-        escaleras[11] = new Escalera(350, 25, "imagenes/Escalera1.png");
+        escaleras[10] = new Escalera(790, 54, "imagenes/palos1.png");
+        escaleras[11] = new Escalera(340, 54, "imagenes/palos1.png");
 
 
 

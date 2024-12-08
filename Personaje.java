@@ -17,8 +17,9 @@ public class Personaje extends Figura {
     private int contadorBalas; // Contador de balas
     private final int maxBalas = 10; // aqui hay que poner las balas de mario yo digo que unas 10
     private int direccion; // 1 para derecha, -1 para izquierda
+    
 
-
+    // constructor
     public Personaje(int x, int y, String imag) {
         super(x, y, imag);
         this.avanceX = 0;
@@ -43,7 +44,7 @@ public class Personaje extends Figura {
             bala.estadoBala1 = true; // Activa la bala
         contadorBalas++;
         } else {
-            contadorBalas = 0; // Reinicia el contador si se supera el límite
+            contadorBalas = 10; // para poner el limite de balas
         }
     }
     public void moverBalas() {
@@ -98,10 +99,11 @@ public class Personaje extends Figura {
             cambiarImagen("imagenes/marios2.png");
             this.direccion = -1;
         }
-       
+        // aqui salta
         if (tecla == KeyEvent.VK_SPACE && !saltando && !escalando) {
             this.saltando = true;
             this.velocidadY = alturaSalto;
+            // cambiarImagen("imagenes/mariosaltando.png"); es mala idea
         }
         
         // disparo de balas

@@ -26,13 +26,14 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
     public Escenario4(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
         fondo = icono.getImage().getScaledInstance(1200, 700, Image.SCALE_SMOOTH);
-        mario = new Personaje(100, 500, "imagenes/marios1.png");
+        mario = new Personaje(100, 550, "imagenes/marios1.png");
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
         plataformas = new Estructura[65];
         escaleras = new Escalera[15];
        
+        plataformas[61] = new Estructura(5, 680, "imagenes/plataformade33.png");
         plataformas[0] = new Estructura(65, 680, "imagenes/plataformade33.png");
         plataformas[1] = new Estructura(125, 678, "imagenes/plataformade33.png");
         plataformas[2] = new Estructura(185, 676, "imagenes/plataformade33.png");
@@ -50,7 +51,10 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
         plataformas[14] = new Estructura(905, 654, "imagenes/plataformade33.png");
         plataformas[15] = new Estructura(965, 654, "imagenes/plataformade33.png");
         plataformas[16] = new Estructura(1025, 654, "imagenes/plataformade33.png");
+        plataformas[62] = new Estructura(1085, 654, "imagenes/plataformade33.png");
         // Plataformas dsos
+        plataformas[63] = new Estructura(1025, 500, "imagenes/plataformade33.png");
+        plataformas[64] = new Estructura(965, 500, "imagenes/plataformade33.png");
         plataformas[17] = new Estructura(905, 500, "imagenes/plataformade33.png");
         plataformas[18] = new Estructura(845, 500, "imagenes/plataformade33.png");
         plataformas[19] = new Estructura(785, 500, "imagenes/plataformade33.png");
@@ -69,7 +73,6 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
         plataformas[32] = new Estructura(5, 487, "imagenes/plataformade33.png");
 
         // plataforma tres
-        plataformas[33] = new Estructura(50, 327, "imagenes/plataformade33.png");
         plataformas[34] = new Estructura(110, 326, "imagenes/plataformade33.png");
         plataformas[35] = new Estructura(170, 325, "imagenes/plataformade33.png");
         plataformas[36] = new Estructura(230, 324, "imagenes/plataformade33.png");
@@ -95,21 +98,20 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
         plataformas[53] = new Estructura( 640, 158, "imagenes/plataformade33.png");
         plataformas[54] = new Estructura( 700, 158, "imagenes/plataformade33.png");
        
-        plataformas[56] = new Estructura( 485, 97, "imagenes/princesa.png");
+        plataformas[56] = new Estructura( 485, 97, "imagenes/princesa2.png");
         plataformas[57] = new Estructura(1080, 250, "imagenes/bariles.png");
         plataformas[58] = new Estructura(995, 220, "imagenes/Mono.png");
         // escaleras
-        escaleras[0] = new Escalera(930, 500, "imagenes/Escalera1.png");
-        escaleras[1] = new Escalera(65, 335, "imagenes/Escalera1.png");
-        escaleras[2] = new Escalera(460, 167, "imagenes/Escalera1.png");
-        escaleras[3] = new Escalera(760, 162, "imagenes/Escalera1.png");
-        escaleras[4] = new Escalera(830, 162, "imagenes/Escalera1.png");
-        escaleras[5] = new Escalera(760, 10, "imagenes/Escalera1.png");
-        escaleras[6] = new Escalera(830, 10, "imagenes/Escalera1.png");
-        escaleras[7] = new Escalera(400, 360, "imagenes/Escalera2.png");
-      
-        escaleras[9] = new Escalera(530, 509, "imagenes/Escalera1.png");
-        escaleras[10] = new Escalera(200, 519, "imagenes/Escalera2.png");
+        escaleras[0] = new Escalera(980, 500, "imagenes/Escalera1.png"); // escalera derecha del primero
+        escaleras[1] = new Escalera(110, 327, "imagenes/Escalera1.png"); // escalaera  izquierda segunda se le va a cambiar la imagen  
+        escaleras[2] = new Escalera(460, 167, "imagenes/Escalera1.png"); // escalera princesa
+        escaleras[3] = new Escalera(760, 162, "imagenes/Escalera1.png"); // escalera del mono
+        escaleras[4] = new Escalera(830, 162, "imagenes/Escalera1.png"); // escalera del mono
+        escaleras[5] = new Escalera(760, 10, "imagenes/Escalera1.png");// escalera del mono
+        escaleras[6] = new Escalera(830, 10, "imagenes/Escalera1.png");// escalera del mono
+        escaleras[7] = new Escalera(400, 360, "imagenes/Escalera2.png"); // no se si van a cambiar las imagenes
+        escaleras[9] = new Escalera(630, 500, "imagenes/Escalera1.png");
+        escaleras[10] = new Escalera(200, 530, "imagenes/Escalera2.png");
        
         t = new Timer(16, null);
         t.addActionListener(this);
