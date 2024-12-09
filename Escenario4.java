@@ -152,6 +152,13 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
             }
         }
     }
+
+    public void actualizar() {
+        mario.mover(); // Mueve a Mario
+        mario.moverBalas(); // Mueve las balas disparadas
+    }
+
+
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -186,6 +193,12 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
         Rectangle rectMario = mario.getRectangle();
         g2d.setColor(Color.BLUE);
         g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
+    
+        // Dibuja las balas
+        for (Bala bala : mario.getBalas()) {
+            bala.dibujar(g2d); // Asumiendo que cada bala tiene un método dibujar
+        }
+    
     }
 
     private void verificarColisionConPrincesa() {
@@ -200,7 +213,7 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         verificarColisionConPrincesa();
         mario.mover();
-        
+        mario.moverBalas();
         boolean sobreEstructura = false;
     
         // Manejar colisiones solo si Mario no está escalando
@@ -252,6 +265,26 @@ public class Escenario4 extends JPanel implements ActionListener, KeyListener {
                 mario.setEscalando(false);
             }
         }
+
+            for (Bala bala : mario.getBalas()) {
+                if (bala != null) { 
+                    Rectangle rectBala = bala.getRectangle();
+                    
+                    for (Barril barril : barriles) {
+                        if (barril != null) {
+                            Rectangle rectBarril = barril.getRectangle();
+                            if (rectBala.intersects(rectBarril)) {
+                            
+                                barril.setVisible(false);
+                                barril.setX(3000);
+                                bala.setVisible(0);
+                                bala.setX(3000);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
     
         repaint();
     }
