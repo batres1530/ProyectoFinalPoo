@@ -23,10 +23,13 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
     private Estructura[] plataformas;
     private Escalera[] escaleras;
     private int[] posicionesFijasX = {100, 300, 500, 700, 900};
-    private static final int MAX_BARRILES = 30;
+    private static final int MAX_BARRILES = 30; 
     private Barril[] barriles; 
     private Timer timerBarriles; 
     private int indiceBarrilActual = 0;
+    private Musica musica1; // Música del juego
+    private Musica musicaNivelGanado;
+    private int puntos;
 
     public Escenario2(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -37,9 +40,9 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         this.frame = jfp;
         plataformas = new Estructura[85];
         escaleras = new Escalera[25];
-        // plataforma inicio
+        
+        // Configuración de plataformas (ya existente en tu código original)
         plataformas[0] = new Estructura(0, 640, "imagenes/plataformainicio2.png");
-        // Plataformas uno
         plataformas[1] = new Estructura(64, 482, "imagenes/plataformade32.png");
         plataformas[2] = new Estructura(128, 482, "imagenes/plataformade32.png");
         plataformas[3] = new Estructura(192, 482, "imagenes/plataformade32.png");
@@ -49,21 +52,19 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         plataformas[7] = new Estructura(448, 482, "imagenes/plataformade32.png");
         plataformas[8] = new Estructura(512, 482, "imagenes/plataformade32.png");
         plataformas[9] = new Estructura(576, 482, "imagenes/plataformade32.png");
-        plataformas[10] = new Estructura(640, 482, "imagenes/plataformade32.png");;
-        plataformas[11] = new Estructura(704, 482, "imagenes/plataformade32.png");;
-        plataformas[12] = new Estructura(768, 482, "imagenes/plataformade32.png");;
-        plataformas[13] = new Estructura(832, 482, "imagenes/plataformade32.png");;
-       // plataformas[14] = new Estructura(896, 482, "imagenes/plataformade32.png");;
+        plataformas[10] = new Estructura(640, 482, "imagenes/plataformade32.png");
+        plataformas[11] = new Estructura(704, 482, "imagenes/plataformade32.png");
+        plataformas[12] = new Estructura(768, 482, "imagenes/plataformade32.png");
+        plataformas[13] = new Estructura(832, 482, "imagenes/plataformade32.png");
         plataformas[15] = new Estructura(960, 482, "imagenes/plataformade32.png");
         plataformas[16] = new Estructura(1024, 482, "imagenes/plataformade32.png");
         plataformas[17] = new Estructura(1060, 482, "imagenes/plataformade32.png");
-        // segunda plataforma
+
         plataformas[18] = new Estructura(90, 325, "imagenes/plataformade32.png");
         plataformas[19] = new Estructura(128, 325, "imagenes/plataformade32.png");
         plataformas[20] = new Estructura(192, 325, "imagenes/plataformade32.png");
         plataformas[21] = new Estructura(256, 325, "imagenes/plataformade32.png");
         plataformas[22] = new Estructura(320, 325, "imagenes/plataformade32.png");
-        //plataformas[23] = new Estructura(384, 325, "imagenes/plataformade32.png");
         plataformas[24] = new Estructura(448, 325, "imagenes/plataformade32.png");
         plataformas[25] = new Estructura(512, 325, "imagenes/plataformade32.png");
         plataformas[26] = new Estructura(576, 325, "imagenes/plataformade32.png");
@@ -71,16 +72,15 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         plataformas[28] = new Estructura(704, 325, "imagenes/plataformade32.png");
         plataformas[29] = new Estructura(768, 325, "imagenes/plataformade32.png");
         plataformas[30] = new Estructura(832, 325, "imagenes/plataformade32.png");
-        //plataformas[31] = new Estructura(896, 325, "imagenes/plataformade32.png");
         plataformas[32] = new Estructura(960, 325, "imagenes/plataformade32.png");
         plataformas[33] = new Estructura(1024, 325, "imagenes/plataformade32.png");
-        // Plataformas tres
+
         plataformas[34] = new Estructura(115, 170, "imagenes/plataformade32.png");
         plataformas[35] = new Estructura(170, 170, "imagenes/plataformade32.png");
         plataformas[36] = new Estructura(225, 170, "imagenes/plataformade32.png");
         plataformas[37] = new Estructura(280, 170, "imagenes/plataformade32.png");
         plataformas[38] = new Estructura(335, 170, "imagenes/plataformade32.png");
-        plataformas[39] = new Estructura(390, 170, "imagenes/plataformade32.png");        
+        plataformas[39] = new Estructura(390, 170, "imagenes/plataformade32.png");
         plataformas[40] = new Estructura(445, 170, "imagenes/plataformade32.png");
         plataformas[41] = new Estructura(500, 170, "imagenes/plataformade32.png");
         plataformas[42] = new Estructura(555, 170, "imagenes/plataformade32.png");
@@ -89,61 +89,55 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         plataformas[45] = new Estructura(720, 170, "imagenes/plataformade32.png");
         plataformas[46] = new Estructura(775, 170, "imagenes/plataformade32.png");
         plataformas[47] = new Estructura(830, 170, "imagenes/plataformade32.png");
-        plataformas[48] = new Estructura(885, 170, "imagenes/plataformade32.png");        
+        plataformas[48] = new Estructura(885, 170, "imagenes/plataformade32.png");
         plataformas[49] = new Estructura(940, 170, "imagenes/plataformade32.png");
         plataformas[50] = new Estructura(990, 170, "imagenes/plataformade32.png");
-        // plataforma 5 
-      
-        plataformas[52] = new Estructura( 305, 5, "imagenes/plataformade32.png");
-        plataformas[53] = new Estructura( 360, 5, "imagenes/plataformade32.png");
-        plataformas[54] = new Estructura( 415, 5, "imagenes/plataformade32.png");
-        plataformas[55] = new Estructura( 470, 5, "imagenes/plataformade32.png");
-        plataformas[56] = new Estructura( 525, 5, "imagenes/plataformade32.png");
-        plataformas[57] = new Estructura( 580, 5, "imagenes/plataformade32.png");
-        plataformas[58] = new Estructura( 635, 5, "imagenes/plataformade32.png");
-        plataformas[59] = new Estructura( 690, 5, "imagenes/plataformade32.png");
-        plataformas[60] = new Estructura( 745, 5, "imagenes/plataformade32.png");
-        plataformas[61] = new Estructura( 800, 5, "imagenes/plataformade32.png");
-        
-        
-        // princesa
+
+        plataformas[52] = new Estructura(305, 5, "imagenes/plataformade32.png");
+        plataformas[53] = new Estructura(360, 5, "imagenes/plataformade32.png");
+        plataformas[54] = new Estructura(415, 5, "imagenes/plataformade32.png");
+        plataformas[55] = new Estructura(470, 5, "imagenes/plataformade32.png");
+        plataformas[56] = new Estructura(525, 5, "imagenes/plataformade32.png");
+        plataformas[57] = new Estructura(580, 5, "imagenes/plataformade32.png");
+        plataformas[58] = new Estructura(635, 5, "imagenes/plataformade32.png");
+        plataformas[59] = new Estructura(690, 5, "imagenes/plataformade32.png");
+        plataformas[60] = new Estructura(745, 5, "imagenes/plataformade32.png");
+        plataformas[61] = new Estructura(800, 5, "imagenes/plataformade32.png");
+
+        // Princesa, mono, bariles
         plataformas[65] = new Estructura(700, 108, "imagenes/princesa.png");
         plataformas[66] = new Estructura(450, 103, "imagenes/bariles.png");
         plataformas[67] = new Estructura(550, 100, "imagenes/Mono.gif");
-        //escaleraderecha
+
+        // Vidas (corazones), igual que en el primer escenario
+        plataformas[68] = new Estructura(20, 20, "imagenes/VidasMario.png");
+        plataformas[69] = new Estructura(50, 20, "imagenes/VidasMario.png");
+        plataformas[70] = new Estructura(80, 20, "imagenes/VidasMario.png");
+
+        // escaleras
         escaleras[0] = new Escalera(1067, 485, "imagenes/Escalera1.png");
-        //escalera centro
         escaleras[2] = new Escalera(600, 485, "imagenes/Escalera1.png");
-        // escalera izquierda
-        escaleras[4] = new Escalera(60, 485, "imagenes/Escalera1.png");    
-        //escalera segunda
+        escaleras[4] = new Escalera(60, 485, "imagenes/Escalera1.png");
         escaleras[6] = new Escalera(125, 325, "imagenes/Escalera1.png");
-        // escaler centro 1 
         escaleras[7] = new Escalera(500, 325, "imagenes/Escalera1.png");
-        //escalera centro 2
         escaleras[8] = new Escalera(827, 325, "imagenes/Escalera1.png");
-        // escalera derecha
         escaleras[9] = new Escalera(1008, 325, "imagenes/Escalera1.png");
-        // escalera centro 3
         escaleras[10] = new Escalera(600, 170, "imagenes/Escalera1.png");
-        // escalera izquierda
         escaleras[11] = new Escalera(165, 170, "imagenes/Escalera1.png");
-        // escalera derecha
         escaleras[12] = new Escalera(980, 170, "imagenes/Escalera1.png");
-        // escaleras 4 
         escaleras[13] = new Escalera(350, 42, "imagenes/palos1.png");
-        // escaleras 5
         escaleras[14] = new Escalera(780, 42, "imagenes/palos1.png");
+
         barriles = new Barril[MAX_BARRILES];
-        
         for (Barril barril : barriles) {
             if (barril != null) {
                 barril.cambiarDireccion(true);
                 barril.setAtraviesaPlataformas(true);
             }
         }
-        // escaleras[3] = new Escalera(500, 500, "imagenes/Escalera2.png");
-        
+
+        musica1 = new Musica("Audios/TemaNiveles.wav", true);
+
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
@@ -159,17 +153,16 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
     }
 
     private void generarBarril() {
-        // Busca un espacio disponible en el arreglo de barriles
         for (int i = 0; i < barriles.length; i++) {
             int indice = (indiceBarrilActual + i) % MAX_BARRILES;
-            if (barriles[i] == null) {
+            if (barriles[indice] == null) {
                 int x = posicionesFijasX[indiceBarrilActual];
                 int y = 50; // Posición inicial en Y
                 barriles[indice] = new Barril(x, y, "imagenes/barrilE.png");
                 barriles[indice].setVisible(true);
                 barriles[indice].cambiarDireccion(true);
                 barriles[indice].setAtraviesaPlataformas(true);
-                indiceBarrilActual = (indiceBarrilActual + 1) % posicionesFijasX.length; // Ciclar posiciones fijas
+                indiceBarrilActual = (indiceBarrilActual + 1) % posicionesFijasX.length;
                 break;
             }
         }
@@ -180,45 +173,40 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(fondo, 0, 0, this.getWidth(), this.getHeight(), null);
         for (int i = 0; i < plataformas.length; i++) {
-            if (plataformas[i] != null) {
+            if (plataformas[i] != null && plataformas[i].getVisible() == 1) {
                 plataformas[i].dibujar(g2d);
-                Rectangle rectPlataforma = plataformas[i].getRectangle();
-                g2d.setColor(Color.RED);
-                g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
             }
         }
         for (int i = 0; i < escaleras.length; i++){
             if (escaleras[i] != null) {
                 escaleras[i].dibujar(g2d);
-                Rectangle rectEscalera = escaleras[i].getRectangle();
-                g2d.setColor(Color.GREEN);
-                g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
             }
         }
-        for(int i = 0; i < barriles.length; i++) {
+        for (int i = 0; i < barriles.length; i++) {
             if (barriles[i] != null) {
                 barriles[i].mover(plataformas);
                 barriles[i].dibujar(g2d);
-                Rectangle rectBarril = barriles[i].getRectangle();
-                g2d.setColor(Color.YELLOW);
-                g2d.drawRect(rectBarril.x, rectBarril.y, rectBarril.width, rectBarril.height);
             }
         }
 
         mario.dibujar(g2d);
-        Rectangle rectMario = mario.getRectangle();
-        g2d.setColor(Color.BLUE);
-        g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
-    
+
         for (Bala bala : mario.getBalas()) {
-            bala.dibujar(g2d); // Asumiendo que cada bala tiene un método dibujar
+            if (bala != null && bala.getVisible() == 1) {
+                bala.dibujar(g2d); 
+            }
         }
 
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 20));
+        g2d.drawString("Puntos: " + puntos, 120, 40);
     }
 
     private void verificarColisionConPrincesa() {
         Estructura princesa = plataformas[65];
-        if (mario.getRectangle().intersects(princesa.getRectangle())) {
+        if (princesa != null && princesa.getVisible() == 1 && mario.getRectangle().intersects(princesa.getRectangle())) {
+            musicaNivelGanado = new Musica("Audios/NivelGanado.wav", false);
+            musica1.detener();
             t.stop();
             frame.dispose();
             frame = new Principal(3);
@@ -229,39 +217,35 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         verificarColisionConPrincesa();
         mario.mover();
         mario.moverBalas();
+
         boolean sobreEstructura = false;
-    
-        // Manejar colisiones solo si Mario no está escalando
         if (!mario.isEscalando()) {
             for (Estructura estructura : plataformas) {
-                if (estructura != null && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
-                    // Detectar si Mario está cayendo hacia una plataforma
+                if (estructura != null && estructura.getVisible() == 1 && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
                     if (mario.getVelocidadY() > 0 && (mario.getY() + mario.getAlto()) >= estructura.getY()) {
                         mario.setY(estructura.getY() - mario.getAlto());
                         mario.setVelocidadY(0);
                         mario.setSaltando(false);
                         sobreEstructura = true;
-                        mario.guardarUltimaPosicionY(mario.getY()); // Guardar la última posición válida
+                        mario.guardarUltimaPosicionY(mario.getY());
                         break;
                     }
                 }
             }
-    
-            // Si no está sobre una plataforma, aplicar gravedad
+
             if (!sobreEstructura) {
                 mario.setVelocidadY(mario.getVelocidadY() + 1);
                 mario.setY(mario.getY() + mario.getVelocidadY());
-    
-                if (mario.getY() >= 640) { // Limitar la posición al suelo
+
+                if (mario.getY() >= 640) {
                     mario.setY(640);
                     mario.setVelocidadY(0);
                     mario.setSaltando(false);
                 }
             }
-    
-            // Manejar colisión con plataformas mientras Mario sube (opcional, si deseas evitar algo al saltar hacia arriba)
+
             for (Estructura estructura : plataformas) {
-                if (estructura != null && mario.getRectangle().intersects(estructura.getRectangle())) {
+                if (estructura != null && estructura.getVisible() == 1 && mario.getRectangle().intersects(estructura.getRectangle())) {
                     if (mario.getVelocidadY() < 0 && mario.getY() <= estructura.getY() + 50) {
                         mario.setY(estructura.getY() + 50);
                         mario.setVelocidadY(0);
@@ -270,47 +254,69 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
                 }
             }
         }
-    
-        // Manejar escaleras
+
+        boolean estaEscalando = false;
         for (Escalera escalera : escaleras) {
             if (escalera != null && escalera.estaEscalando(mario)) {
-                mario.setEscalando(true);
+                estaEscalando = true;
                 break;
-            } else {
-                mario.setEscalando(false);
             }
         }
+        mario.setEscalando(estaEscalando);
 
+        // Colisión de Mario con barriles (igual que en el primer escenario)
         for (Barril barril : barriles) {
             if (barril != null) {
-                barril.mover(plataformas);
                 if (mario.getRectangle().intersects(barril.getRectangle())) {
                     barril.setVisible(false);
                     barril.setX(3000);
+                    puntos -= 250; // restar puntos por golpe
+
+                    // Quitar una vida (de derecha a izquierda), igual que en Escenario
+                    if (plataformas[70] != null && plataformas[70].getVisible() == 1) {
+                        plataformas[70].setVisible(0);
+                    } else if (plataformas[69] != null && plataformas[69].getVisible() == 1) {
+                        plataformas[69].setVisible(0);
+                    } else if (plataformas[68] != null && plataformas[68].getVisible() == 1) {
+                        plataformas[68].setVisible(0);
+                    }
+
+                    // Verificar si no quedan vidas
+                    int vidasRestantes = 0;
+                    if (plataformas[68] != null && plataformas[68].getVisible() == 1) vidasRestantes++;
+                    if (plataformas[69] != null && plataformas[69].getVisible() == 1) vidasRestantes++;
+                    if (plataformas[70] != null && plataformas[70].getVisible() == 1) vidasRestantes++;
+
+                    if (vidasRestantes == 0) {
+                        musica1.detener();
+                        t.stop();
+                        frame.dispose();
+                        frame = new PantallaPerdedor();
+                    }
                 }
             }
         }
 
+        // Colisión de bala con barril (igual que en Escenario)
         for (Bala bala : mario.getBalas()) {
-            if (bala != null) { 
+            if (bala != null && bala.getVisible() == 1) {
                 Rectangle rectBala = bala.getRectangle();
-                
                 for (Barril barril : barriles) {
                     if (barril != null) {
                         Rectangle rectBarril = barril.getRectangle();
                         if (rectBala.intersects(rectBarril)) {
-                          
                             barril.setVisible(false);
                             barril.setX(3000);
                             bala.setVisible(0);
                             bala.setX(3000);
+                            puntos += 200; // sumar puntos por destruir el barril
                             break;
                         }
                     }
                 }
             }
         }
-    
+
         repaint();
     }
 

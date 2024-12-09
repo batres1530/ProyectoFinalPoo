@@ -174,33 +174,21 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         for (int i = 0; i < plataformas.length; i++) {
             if (plataformas[i] != null) {
                 plataformas[i].dibujar(g2d);
-                Rectangle rectPlataforma = plataformas[i].getRectangle();
-                g2d.setColor(Color.RED);
-                g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
             }
         }
         for (int i = 0; i < escaleras.length; i++){
             if (escaleras[i] != null) {
                 escaleras[i].dibujar(g2d);
-                Rectangle rectEscalera = escaleras[i].getRectangle();
-                g2d.setColor(Color.GREEN);
-                g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
             }
         }
 
         for (int i = 0; i < barriles.length; i++){
             if (barriles[i] != null) {
                 barriles[i].dibujar(g2d);
-                Rectangle rectBarril = barriles[i].getRectangle();
-                g2d.setColor(Color.YELLOW);
-                g2d.drawRect(rectBarril.x, rectBarril.y, rectBarril.width, rectBarril.height);
             }
         }
 
         mario.dibujar(g2d);
-        Rectangle rectMario = mario.getRectangle();
-        g2d.setColor(Color.BLUE);
-        g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
         
         // Dibuja las balas
         for (Bala bala : mario.getBalas()) {
