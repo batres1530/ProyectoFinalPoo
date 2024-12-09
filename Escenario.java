@@ -27,6 +27,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Timer timerBarriles; // Temporizador de barriles
     private int indiceBarrilActual = 0; 
     private Musica musica1; // Música del juego
+    private Musica musicaNivelGanado;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -211,6 +212,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         Estructura princesa = plataformas[56];
         if (mario.getRectangle().intersects(princesa.getRectangle())) {
             // Detener la música antes de avanzar de nivel
+            musicaNivelGanado = new Musica ("Audios/NivelGanado.wav", false);
             musica1.detener();
             t.stop();
             frame.dispose();
