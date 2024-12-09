@@ -294,6 +294,13 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                     } else if (plataformas[59] != null && plataformas[59].getVisible() == 1) {
                         plataformas[59].setVisible(0);
                     }
+
+                    if (plataformas[59] != null && plataformas[59].getVisible() == 0) {
+                        musica1.detener();
+                        t.stop();
+                        frame.dispose();
+                        frame = new PantallaPerdedor();
+                    }
                     puntos -= 250;
                 }
             }

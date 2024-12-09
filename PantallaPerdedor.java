@@ -15,13 +15,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
-public class iniciodejuego extends JFrame
+public class PantallaPerdedor extends JFrame
 {
     ImageIcon jugar, jugar2;
     JButton botJugar;
     JLabel fondoI;
     Musica musica;
-    public iniciodejuego()
+    public PantallaPerdedor()
     {
         getContentPane().setLayout(null);
       
@@ -52,7 +52,7 @@ public class iniciodejuego extends JFrame
         
         //COLOCAMOS EL FONDO POR MEDIO DE LA ETIQUETA (JLABEL)
         fondoI =new JLabel("");
-        fondoI.setIcon(new ImageIcon("imagenes/iniciodejugo.gif"));
+        fondoI.setIcon(new ImageIcon("imagenes/PantallaPerdedor.png"));
         fondoI.setBounds(0, 0, 1200, 700);
         getContentPane().add(fondoI);
         
