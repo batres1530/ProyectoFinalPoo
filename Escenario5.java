@@ -22,6 +22,12 @@ public class Escenario5 extends JPanel implements ActionListener, KeyListener {
     private Personaje mario;
     private Estructura[] plataformas;
     private Escalera[] escaleras;
+    private int[] posicionesFijasX = {100, 300, 500, 700, 900};
+    private static final int MAX_BARRILES = 30;
+    private Barril[] barriles; 
+    private Timer timerBarriles; 
+    private int indiceBarrilActual = 0;
+
 
     public Escenario5(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -73,13 +79,43 @@ public class Escenario5 extends JPanel implements ActionListener, KeyListener {
         escaleras[10] = new Escalera(790, 54, "imagenes/palos1.png");
         escaleras[11] = new Escalera(340, 54, "imagenes/palos1.png");
 
-
-
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.cambiarDireccion(true);
+                barril.setAtraviesaPlataformas(true);
+            }
+        }
+        // escaleras[3] = new Escalera(500, 500, "imagenes/Escalera2.png");
+        
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
+
+        timerBarriles = new Timer(500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarBarril();
+            }
+        });
+        timerBarriles.start();
+    }
+
+    private void generarBarril() {
+        // Busca un espacio disponible en el arreglo de barriles
+        for (int i = 0; i < barriles.length; i++) {
+            int indice = (indiceBarrilActual + i) % MAX_BARRILES;
+            if (barriles[i] == null) {
+                int x = posicionesFijasX[indiceBarrilActual];
+                int y = 50; // Posición inicial en Y
+                barriles[indice] = new Barril(x, y, "imagenes/barrilE.png");
+                barriles[indice].setVisible(true);
+                barriles[indice].cambiarDireccion(true);
+                barriles[indice].setAtraviesaPlataformas(true);
+                indiceBarrilActual = (indiceBarrilActual + 1) % posicionesFijasX.length; // Ciclar posiciones fijas
+                break;
+            }
+        }
     }
 
     public void paint(Graphics g) {
@@ -102,26 +138,40 @@ public class Escenario5 extends JPanel implements ActionListener, KeyListener {
                 g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
             }
         }
+        for(int i = 0; i < barriles.length; i++) {
+            if (barriles[i] != null) {
+                barriles[i].mover(plataformas);
+                barriles[i].dibujar(g2d);
+                Rectangle rectBarril = barriles[i].getRectangle();
+                g2d.setColor(Color.YELLOW);
+                g2d.drawRect(rectBarril.x, rectBarril.y, rectBarril.width, rectBarril.height);
+            }
+        }
 
         mario.dibujar(g2d);
         Rectangle rectMario = mario.getRectangle();
         g2d.setColor(Color.BLUE);
         g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
+    
+        for (Bala bala : mario.getBalas()) {
+            bala.dibujar(g2d); // Asumiendo que cada bala tiene un método dibujar
+        }
+
     }
 
     private void verificarColisionConPrincesa() {
-        Estructura princesa = plataformas[56];
+        Estructura princesa = plataformas[65];
         if (mario.getRectangle().intersects(princesa.getRectangle())) {
             t.stop();
             frame.dispose();
-            frame = new Principal(6);
+            frame = new Principal(3);
         }
     }
 
     public void actionPerformed(ActionEvent e) {
         verificarColisionConPrincesa();
         mario.mover();
-        
+        mario.moverBalas();
         boolean sobreEstructura = false;
     
         // Manejar colisiones solo si Mario no está escalando
@@ -171,6 +221,36 @@ public class Escenario5 extends JPanel implements ActionListener, KeyListener {
                 break;
             } else {
                 mario.setEscalando(false);
+            }
+        }
+
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.mover(plataformas);
+                if (mario.getRectangle().intersects(barril.getRectangle())) {
+                    barril.setVisible(false);
+                    barril.setX(3000);
+                }
+            }
+        }
+
+        for (Bala bala : mario.getBalas()) {
+            if (bala != null) { 
+                Rectangle rectBala = bala.getRectangle();
+                
+                for (Barril barril : barriles) {
+                    if (barril != null) {
+                        Rectangle rectBarril = barril.getRectangle();
+                        if (rectBala.intersects(rectBarril)) {
+                          
+                            barril.setVisible(false);
+                            barril.setX(3000);
+                            bala.setVisible(0);
+                            bala.setX(3000);
+                            break;
+                        }
+                    }
+                }
             }
         }
     
