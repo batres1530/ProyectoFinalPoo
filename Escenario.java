@@ -313,6 +313,18 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                 }
             }
         }
+
+        for (int i = 0; i < barriles.length; i++) {
+            Rectangle rectFuego = plataformas[58].getRectangle();
+            Barril barril = barriles[i];
+            if (barril != null) {
+                Rectangle rectBarril = barril.getRectangle();
+                if (rectBarril.intersects(rectFuego)) {
+                    barril.setVisible(false);
+                    barril.setX(3000); 
+                }
+            }
+        }
         
         repaint();
     }
