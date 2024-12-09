@@ -270,16 +270,25 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                 }
             }
         }
-
-        // for (Barril barril : barriles) {
-        //     if (barril != null) {
-        //         barril.mover(plataformas);
-        //         if (.getRectangle().intersects(barril.getRectangle())) {
-        //             barril.setVisible(false);
-        //             barril.setX(3000);
-        //         }
-        //     }
-        // }
+        for (Bala bala : mario.getBalas()) {
+            if (bala != null) { 
+                Rectangle rectBala = bala.getRectangle();
+                
+                for (Barril barril : barriles) {
+                    if (barril != null) {
+                        Rectangle rectBarril = barril.getRectangle();
+                        if (rectBala.intersects(rectBarril)) {
+                          
+                            barril.setVisible(false);
+                            barril.setX(3000);
+                            bala.setVisible(0);
+                            bala.setX(3000);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         
 
     
