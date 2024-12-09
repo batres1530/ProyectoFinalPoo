@@ -17,19 +17,27 @@ import javax.swing.JOptionPane;
 
 public class Inicio extends JFrame
 {
-    ImageIcon jugar, jugar2, salir, salir2;
-    JButton botJugar, botSalir;
+    ImageIcon jugar, jugar2, salir, salir2, intruciones,intruciones2;
+    JButton botJugar, botSalir, botIntro;
     JLabel fondoI;
     Musica musica;
     public Inicio()
     {
         getContentPane().setLayout(null);
-        jugar = new ImageIcon("imagenes/play.png");
-        jugar2 = new ImageIcon("imagenes/play2.png");
-        salir = new ImageIcon("imagenes/exit.png");
-        salir2 = new ImageIcon("imagenes/exit2.png");
+        intruciones = new ImageIcon("imagenes/introciones.png");
+        intruciones2 = new ImageIcon("imagenes/intruciones2.png");
+        jugar = new ImageIcon("imagenes/jugar.png");
+        jugar2 = new ImageIcon("imagenes/juga2.png");
+        salir = new ImageIcon("imagenes/salir.png");
+        salir2 = new ImageIcon("imagenes/salir2.png");
         
         //Inicializamos botones
+        botIntro = new JButton(intruciones);
+        botIntro.setContentAreaFilled(false); //Quitar relleno
+        botIntro.setBorder(null); //Quitar borde
+        botIntro.setFocusPainted(false); //Quitar preseleccion de boton
+        botIntro.setRolloverIcon(intruciones2); //Cuando cursor este sobre boton, llama a intruciones2
+        botIntro.setToolTipText("PRESIONE PARA VER LAS INTRUCCIONES");
         botJugar = new JButton(jugar);
         botJugar.setContentAreaFilled(false); //Quitar relleno
         botJugar.setBorder(null); //Quitar borde
@@ -44,16 +52,19 @@ public class Inicio extends JFrame
         botSalir.setToolTipText("PRESIONE SI DESEA SALIR DEL JUEGO");
         
         //COLOCAMOS LOS BOTONES EN LAS COORDENADAS Y TAMAÑOS ESPECÍFICOS
-        botJugar.setBounds(350, 150, 450, 200);
-        botSalir.setBounds(350, 350, 450, 200); // X, Y, ANCHO, ALTO
+        botJugar.setBounds(310, 400, 250, 125);
+        botSalir.setBounds(680, 400, 250, 125); // X, Y, ANCHO, ALTO
+        botIntro.setBounds(470, 250, 300, 143);
         
         //AGREGAR LOS BOTONES AL JFRAME
         getContentPane().add(botJugar);
         getContentPane().add(botSalir);
+        getContentPane().add(botIntro);
         
         //HABILITAMOS LOS BOTONES
         botJugar.setEnabled(true);
         botSalir.setEnabled(true);
+        botIntro.setEnabled(true);
         
         //COLOCAMOS EL FONDO POR MEDIO DE LA ETIQUETA (JLABEL)
         fondoI =new JLabel("");
@@ -64,6 +75,16 @@ public class Inicio extends JFrame
         //PONEMOS LA RUTA DE LA MUSICA
         musica = new Musica ("Audios/TemaInicio.wav", false);
         //DAMOS LA ACCION A LOS BOTONES
+        botIntro.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ev)
+            {
+                musica.detener();
+                dispose(); //Quita visualmente el inicio
+                new intruciones( );
+            }
+        });
+
         botJugar.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent ev)
