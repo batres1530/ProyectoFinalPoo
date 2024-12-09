@@ -28,6 +28,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private int indiceBarrilActual = 0; 
     private Musica musica1; // Música del juego
     private Musica musicaNivelGanado;
+    private int puntos;
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -205,6 +206,9 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         for (Bala bala : mario.getBalas()) {
             bala.dibujar(g2d); 
         }
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 20));
+        g2d.drawString("Puntos: " + puntos, 120, 40);
 
     }
 
@@ -290,6 +294,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                     } else if (plataformas[59] != null && plataformas[59].getVisible() == 1) {
                         plataformas[59].setVisible(0);
                     }
+                    puntos -= 250;
                 }
             }
         }
@@ -306,7 +311,8 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                             barril.setVisible(false);
                             barril.setX(3000);
                             bala.setVisible(0);
-                            bala.setX(3000);
+                            bala.setX(2000);
+                            puntos+= 200;
                             break;
                         }
                     }
