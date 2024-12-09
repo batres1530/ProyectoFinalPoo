@@ -23,6 +23,16 @@ public class Escenario6 extends JPanel implements ActionListener, KeyListener {
     private Estructura[] plataformas;
     private Escalera[] escaleras;
 
+    // Variables agregadas (lógica similar a Escenario2)
+    private static final int MAX_BARRILES = 30; 
+    private Barril[] barriles; 
+    private int[] posicionesFijasX = {100, 300, 500, 700, 900};
+    private Timer timerBarriles; 
+    private int indiceBarrilActual = 0;
+    private Musica musica1; 
+    private Musica musicaNivelGanado;
+    private int puntos;
+
     public Escenario6(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
         fondo = icono.getImage().getScaledInstance(1200, 700, Image.SCALE_SMOOTH);
@@ -30,9 +40,10 @@ public class Escenario6 extends JPanel implements ActionListener, KeyListener {
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
-        plataformas = new Estructura[85];
+        plataformas = new Estructura[90];  // Aumentar tamaño del array para vidas y otros elementos
         escaleras = new Escalera[25];
-        // plataforma inicio
+
+        // Plataforma inicio
         plataformas[0] = new Estructura(0, 640, "imagenes/plataformainicio2.png");
         // Plataformas uno
         plataformas[1] = new Estructura(64, 482, "imagenes/plataformade32.png");
@@ -75,7 +86,7 @@ public class Escenario6 extends JPanel implements ActionListener, KeyListener {
         plataformas[38] = new Estructura(760, 603, "imagenes/plataformade32.png");
         plataformas[39] = new Estructura(824, 603, "imagenes/plataformade32.png");
         plataformas[40] = new Estructura(888, 603, "imagenes/plataformade32.png");
-        //segunda plataforma donde cae el mono
+        // segunda plataforma donde cae el mono
         plataformas[41] = new Estructura(248, 566, "imagenes/plataformade32.png");
         plataformas[42] = new Estructura(312, 566, "imagenes/plataformade32.png");
         plataformas[43] = new Estructura(376, 566, "imagenes/plataformade32.png");
@@ -100,102 +111,150 @@ public class Escenario6 extends JPanel implements ActionListener, KeyListener {
         plataformas[61] = new Estructura(824, 529, "imagenes/plataformade32.png");
         plataformas[62] = new Estructura(888, 529, "imagenes/plataformade32.png");
         
-        // personajes 
+        // Personajes
         plataformas[65] = new Estructura(700, 108, "imagenes/princesa.png");
         plataformas[66] = new Estructura(450, 108, "imagenes/bariles.png");
         plataformas[67] = new Estructura(550, 75, "imagenes/Mono.png");
-        //escaleras
+
+        // Vidas (corazones)
+        plataformas[68] = new Estructura(20, 20, "imagenes/VidasMario.png");
+        plataformas[69] = new Estructura(50, 20, "imagenes/VidasMario.png");
+        plataformas[70] = new Estructura(80, 20, "imagenes/VidasMario.png");
+
+        // Escaleras
         escaleras[0] = new Escalera(1067, 485, "imagenes/Escalera1.png");
         escaleras[1] = new Escalera(60, 485, "imagenes/Escalera1.png");    
         escaleras[2] = new Escalera(125, 325, "imagenes/Escalera1.png");
         escaleras[3] = new Escalera(1008, 325, "imagenes/Escalera1.png");
         escaleras[4] = new Escalera(165, 170, "imagenes/Escalera1.png");
         escaleras[5] = new Escalera(980, 170, "imagenes/Escalera1.png");
-    
         
+        // Barriles
+        barriles = new Barril[MAX_BARRILES];
+        for (Barril barril : barriles) {
+            if (barril != null) {
+                barril.cambiarDireccion(true);
+                barril.setAtraviesaPlataformas(true);
+            }
+        }
 
-        // escaleras[3] = new Escalera(500, 500, "imagenes/Escalera2.png");
+        // Música
+        musica1 = new Musica("Audios/TemaNiveles.wav", true);
         
         t = new Timer(16, null);
         t.addActionListener(this);
         t.start();
         addKeyListener(this);
         this.setFocusable(true);
+
+        // Timer de barriles
+        timerBarriles = new Timer(500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generarBarril();
+            }
+        });
+        timerBarriles.start();
+    }
+
+    private void generarBarril() {
+        for (int i = 0; i < barriles.length; i++) {
+            int indice = (indiceBarrilActual + i) % MAX_BARRILES;
+            if (barriles[indice] == null) {
+                int x = posicionesFijasX[indiceBarrilActual];
+                int y = 50; // Posición inicial en Y
+                barriles[indice] = new Barril(x, y, "imagenes/barrilE.png");
+                barriles[indice].setVisible(true);
+                barriles[indice].cambiarDireccion(true);
+                barriles[indice].setAtraviesaPlataformas(true);
+                indiceBarrilActual = (indiceBarrilActual + 1) % posicionesFijasX.length;
+                break;
+            }
+        }
+    }
+
+    private void verificarColisionConPrincesa() {
+        Estructura princesa = plataformas[65];
+        if (princesa != null && princesa.getVisible() == 1 && mario.getRectangle().intersects(princesa.getRectangle())) {
+            musicaNivelGanado = new Musica("Audios/NivelGanado.wav", false);
+            musica1.detener();
+            t.stop();
+            frame.dispose();
+            // Aquí podría ir la lógica para avanzar a otro nivel o mostrar alguna pantalla final
+        }
     }
 
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(fondo, 0, 0, this.getWidth(), this.getHeight(), null);
+
         for (int i = 0; i < plataformas.length; i++) {
-            if (plataformas[i] != null) {
+            if (plataformas[i] != null && plataformas[i].getVisible() == 1) {
                 plataformas[i].dibujar(g2d);
-                Rectangle rectPlataforma = plataformas[i].getRectangle();
-                g2d.setColor(Color.RED);
-                g2d.drawRect(rectPlataforma.x, rectPlataforma.y, rectPlataforma.width, rectPlataforma.height);
             }
         }
+
         for (int i = 0; i < escaleras.length; i++){
             if (escaleras[i] != null) {
                 escaleras[i].dibujar(g2d);
-                Rectangle rectEscalera = escaleras[i].getRectangle();
-                g2d.setColor(Color.GREEN);
-                g2d.drawRect(rectEscalera.x, rectEscalera.y, rectEscalera.width, rectEscalera.height);
+            }
+        }
+
+        for (int i = 0; i < barriles.length; i++) {
+            if (barriles[i] != null && barriles[i].getVisible() == 1) {
+                barriles[i].mover(plataformas);
+                barriles[i].dibujar(g2d);
             }
         }
 
         mario.dibujar(g2d);
-        Rectangle rectMario = mario.getRectangle();
-        g2d.setColor(Color.BLUE);
-        g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
-    }
 
-    private void verificarColisionConPrincesa() {
-        Estructura princesa = plataformas[65];
-        if (mario.getRectangle().intersects(princesa.getRectangle())) {
-            t.stop();
-            frame.dispose();
-            
+        // Dibujar balas de Mario
+        for (Bala bala : mario.getBalas()) {
+            if (bala != null && bala.getVisible() == 1) {
+                bala.dibujar(g2d); 
+            }
         }
+
+        // Mostrar puntaje
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 20));
+        g2d.drawString("Puntos: " + puntos, 120, 40);
     }
 
     public void actionPerformed(ActionEvent e) {
         verificarColisionConPrincesa();
         mario.mover();
-        
+        mario.moverBalas();
+
         boolean sobreEstructura = false;
-    
-        // Manejar colisiones solo si Mario no está escalando
         if (!mario.isEscalando()) {
             for (Estructura estructura : plataformas) {
-                if (estructura != null && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
-                    // Detectar si Mario está cayendo hacia una plataforma
+                if (estructura != null && estructura.getVisible() == 1 && mario.getFeetRectangle().intersects(estructura.getRectangle())) {
                     if (mario.getVelocidadY() > 0 && (mario.getY() + mario.getAlto()) >= estructura.getY()) {
                         mario.setY(estructura.getY() - mario.getAlto());
                         mario.setVelocidadY(0);
                         mario.setSaltando(false);
                         sobreEstructura = true;
-                        mario.guardarUltimaPosicionY(mario.getY()); // Guardar la última posición válida
+                        mario.guardarUltimaPosicionY(mario.getY());
                         break;
                     }
                 }
             }
-    
-            // Si no está sobre una plataforma, aplicar gravedad
+
             if (!sobreEstructura) {
                 mario.setVelocidadY(mario.getVelocidadY() + 1);
                 mario.setY(mario.getY() + mario.getVelocidadY());
-    
-                if (mario.getY() >= 640) { // Limitar la posición al suelo
+
+                if (mario.getY() >= 640) {
                     mario.setY(640);
                     mario.setVelocidadY(0);
                     mario.setSaltando(false);
                 }
             }
-    
-            // Manejar colisión con plataformas mientras Mario sube (opcional, si deseas evitar algo al saltar hacia arriba)
+
             for (Estructura estructura : plataformas) {
-                if (estructura != null && mario.getRectangle().intersects(estructura.getRectangle())) {
+                if (estructura != null && estructura.getVisible() == 1 && mario.getRectangle().intersects(estructura.getRectangle())) {
                     if (mario.getVelocidadY() < 0 && mario.getY() <= estructura.getY() + 50) {
                         mario.setY(estructura.getY() + 50);
                         mario.setVelocidadY(0);
@@ -204,17 +263,69 @@ public class Escenario6 extends JPanel implements ActionListener, KeyListener {
                 }
             }
         }
-    
-        // Manejar escaleras
+
+        boolean estaEscalando = false;
         for (Escalera escalera : escaleras) {
             if (escalera != null && escalera.estaEscalando(mario)) {
-                mario.setEscalando(true);
+                estaEscalando = true;
                 break;
-            } else {
-                mario.setEscalando(false);
             }
         }
-    
+        mario.setEscalando(estaEscalando);
+
+        // Colisión de Mario con barriles
+        for (Barril barril : barriles) {
+            if (barril != null && barril.getVisible() == 1) {
+                if (mario.getRectangle().intersects(barril.getRectangle())) {
+                    barril.setVisible(false);
+                    barril.setX(3000);
+                    puntos -= 250; // restar puntos por golpe
+
+                    // Quitar una vida
+                    if (plataformas[70] != null && plataformas[70].getVisible() == 1) {
+                        plataformas[70].setVisible(0);
+                    } else if (plataformas[69] != null && plataformas[69].getVisible() == 1) {
+                        plataformas[69].setVisible(0);
+                    } else if (plataformas[68] != null && plataformas[68].getVisible() == 1) {
+                        plataformas[68].setVisible(0);
+                    }
+
+                    // Verificar si no quedan vidas
+                    int vidasRestantes = 0;
+                    if (plataformas[68] != null && plataformas[68].getVisible() == 1) vidasRestantes++;
+                    if (plataformas[69] != null && plataformas[69].getVisible() == 1) vidasRestantes++;
+                    if (plataformas[70] != null && plataformas[70].getVisible() == 1) vidasRestantes++;
+
+                    if (vidasRestantes == 0) {
+                        musica1.detener();
+                        t.stop();
+                        frame.dispose();
+                        frame = new PantallaPerdedor();
+                    }
+                }
+            }
+        }
+
+        // Colisión de bala con barril
+        for (Bala bala : mario.getBalas()) {
+            if (bala != null && bala.getVisible() == 1) {
+                Rectangle rectBala = bala.getRectangle();
+                for (Barril barril : barriles) {
+                    if (barril != null && barril.getVisible() == 1) {
+                        Rectangle rectBarril = barril.getRectangle();
+                        if (rectBala.intersects(rectBarril)) {
+                            barril.setVisible(false);
+                            barril.setX(3000);
+                            bala.setVisible(0);
+                            bala.setX(3000);
+                            puntos += 200; // sumar puntos por destruir el barril
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         repaint();
     }
 
