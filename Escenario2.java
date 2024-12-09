@@ -109,7 +109,7 @@ public class Escenario2 extends JPanel implements ActionListener, KeyListener {
         // princesa
         plataformas[65] = new Estructura(700, 108, "imagenes/princesa.png");
         plataformas[66] = new Estructura(450, 103, "imagenes/bariles.png");
-        plataformas[67] = new Estructura(550, 75, "imagenes/Mono.png");
+        plataformas[67] = new Estructura(550, 100, "imagenes/Mono.gif");
         //escaleraderecha
         escaleras[0] = new Escalera(1067, 485, "imagenes/Escalera1.png");
         //escalera centro

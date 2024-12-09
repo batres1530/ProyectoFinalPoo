@@ -55,6 +55,7 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
         plataformas[15] = new Estructura(965, 654, "imagenes/plataformade34.png");
         plataformas[16] = new Estructura(1025, 654, "imagenes/plataformade34.png");
         plataformas[62] = new Estructura(1085, 654, "imagenes/plataformade34.png");
+        plataformas[69] = new Estructura(1145, 654, "imagenes/plataformade34.png");
         // Plataformas dsos
         plataformas[63] = new Estructura(1025, 500, "imagenes/plataformade34.png");
         plataformas[64] = new Estructura(965, 500, "imagenes/plataformade34.png");
@@ -101,9 +102,10 @@ public class Escenario3 extends JPanel implements ActionListener, KeyListener {
         plataformas[53] = new Estructura( 640, 158, "imagenes/plataformade34.png");
         plataformas[54] = new Estructura( 700, 158, "imagenes/plataformade34.png");
        
-        plataformas[56] = new Estructura( 485, 97, "imagenes/princesa2.png");
+        plataformas[56] = new Estructura( 525, 97, "imagenes/princesa2.png");
         plataformas[57] = new Estructura(1080, 250, "imagenes/bariles.png");
-        plataformas[58] = new Estructura(995, 220, "imagenes/Mono.png");
+        plataformas[58] = new Estructura(965, 247, "imagenes/Mono.gif");
+        plataformas[70] = new Estructura(15, 580, "imagenes/fuego.gif");
         // escaleras
         escaleras[0] = new Escalera(980, 500, "imagenes/Escalera1.png"); // escalera derecha del primero
         escaleras[1] = new Escalera(110, 327, "imagenes/Escalera1.png"); // escalaera  izquierda segunda se le va a cambiar la imagen  
