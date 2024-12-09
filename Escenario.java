@@ -24,8 +24,9 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     private Escalera[] escaleras;
     private static final int MAX_BARRILES = 30; // Número máximo de barriles
     private Barril[] barriles; // Arreglo de barriles
-    private Timer timerBarriles; // Temporizadores
+    private Timer timerBarriles; // Temporizador de barriles
     private int indiceBarrilActual = 0; 
+    private Musica musica1; // Música del juego
 
     public Escenario(JFrame jfp) {
         icono = new ImageIcon("imagenes/fondo.png");
@@ -34,10 +35,12 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         this.setSize(1200, 700);
         this.setVisible(true);
         this.frame = jfp;
+
         plataformas = new Estructura[85];
         escaleras = new Escalera[15];
+
+        // Plataformas (versión del primer código, mantenemos esta configuración)
         plataformas[0] = new Estructura(0, 655, "imagenes/Plataformasinicio.png");
-        
         plataformas[1] = new Estructura(0, 479, "imagenes/plataformade3.png");
         plataformas[2] = new Estructura(64, 479, "imagenes/plataformade3.png");
         plataformas[3] = new Estructura(128, 479, "imagenes/plataformade3.png");
@@ -47,9 +50,9 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         plataformas[7] = new Estructura(384, 479, "imagenes/plataformade3.png");
         plataformas[8] = new Estructura(448, 479, "imagenes/plataformade3.png");
         plataformas[9] = new Estructura(512, 480, "imagenes/plataformade3.png");
-        plataformas[10] = new Estructura(576, 480, "imagenes/plataformade3.png");;
-        plataformas[11] = new Estructura(640, 480, "imagenes/plataformade3.png");;
-        plataformas[12] = new Estructura(704, 480, "imagenes/plataformade3.png");;
+        plataformas[10] = new Estructura(576, 480, "imagenes/plataformade3.png");
+        plataformas[11] = new Estructura(640, 480, "imagenes/plataformade3.png");
+        plataformas[12] = new Estructura(704, 480, "imagenes/plataformade3.png");
         plataformas[13] = new Estructura(768, 481, "imagenes/plataformade3.png");
         plataformas[14] = new Estructura(832, 482, "imagenes/plataformade3.png");
         plataformas[15] = new Estructura(896, 483, "imagenes/plataformade3.png");
@@ -99,8 +102,14 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         plataformas[56] = new Estructura(485, 0, "imagenes/princesa.png");
         plataformas[57] = new Estructura(40, 89, "imagenes/bariles.png");
         plataformas[58] = new Estructura(0, 555, "imagenes/fuego.gif");
-        //escaleras
-        escaleras[0] = new Escalera(894, 485, "imagenes/Escalera1.png"); // 500 es la altura de la escala
+        
+        // Agregamos las vidas del personaje (corazones) del segundo código
+        plataformas[59] = new Estructura(20, 20, "imagenes/VidasMario.png");
+        plataformas[60] = new Estructura(50, 20, "imagenes/VidasMario.png");
+        plataformas[61] = new Estructura(80, 20, "imagenes/VidasMario.png");
+
+        // escaleras (mantener las del primer código)
+        escaleras[0] = new Escalera(894, 485, "imagenes/Escalera1.png");
         escaleras[9] = new Escalera(894, 632, "imagenes/Escalera2.png");
         escaleras[1] = new Escalera(223, 315, "imagenes/Escalera1.png");
         escaleras[10] = new Escalera(223, 460, "imagenes/Escalera2.png");
@@ -108,9 +117,10 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         escaleras[3] = new Escalera(115, 85, "imagenes/Mono.gif");
         escaleras[4] = new Escalera(298, 7, "imagenes/Escalera1.png");
         escaleras[5] = new Escalera(243, 7, "imagenes/Escalera1.png");
-        escaleras[6] = new Escalera(553, 90, "imagenes/Escalera3.png"); // peincesa
-        escaleras[7] = new Escalera(553, 125, "imagenes/Escalera3.png"); // peincesa
-        escaleras[8] = new Escalera(553, 67, "imagenes/Escalera2.png"); // peincesa
+        escaleras[6] = new Escalera(553, 90, "imagenes/Escalera3.png"); 
+        escaleras[7] = new Escalera(553, 125, "imagenes/Escalera3.png"); 
+        escaleras[8] = new Escalera(553, 67, "imagenes/Escalera2.png"); 
+
         barriles = new Barril[MAX_BARRILES];
         for (Barril barril : barriles) {
             if (barril != null) {
@@ -118,6 +128,9 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                 barril.setAtraviesaPlataformas(false);
             }
         }
+
+        // Iniciar la música del juego (del segundo código)
+        musica1 = new Musica("Audios/TemaNiveles.wav", true);
 
         t = new Timer(16, null);
         t.addActionListener(this);
@@ -135,13 +148,11 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
     }
 
     private void generarBarril() {
-        // Busca un espacio disponible en el arreglo de barriles
         for (int i = 0; i < MAX_BARRILES; i++) {
-            int indice = (indiceBarrilActual + i) % MAX_BARRILES; // Búsqueda circular
+            int indice = (indiceBarrilActual + i) % MAX_BARRILES; 
             if (barriles[indice] == null) {
-                // Genera un nuevo barril en la posición deseada
                 barriles[indice] = new Barril(100, 140, "imagenes/barrilE.png");
-                barriles[indice].cambiarDireccion(false); //cambiar a true en los niveles que caen
+                barriles[indice].cambiarDireccion(false);
                 barriles[indice].setAtraviesaPlataformas(false);
                 indiceBarrilActual = (indice + 1) % MAX_BARRILES;
                 break;
@@ -189,16 +200,18 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.BLUE);
         g2d.drawRect(rectMario.x, rectMario.y, rectMario.width, rectMario.height);
         
-         // Dibuja las balas
+        // Dibuja las balas
         for (Bala bala : mario.getBalas()) {
-        bala.dibujar(g2d); // Asumiendo que cada bala tiene un método dibujar
-    }
+            bala.dibujar(g2d); 
+        }
 
     }
 
     private void verificarColisionConPrincesa() {
         Estructura princesa = plataformas[56];
         if (mario.getRectangle().intersects(princesa.getRectangle())) {
+            // Detener la música antes de avanzar de nivel
+            musica1.detener();
             t.stop();
             frame.dispose();
             frame = new Principal(2);
@@ -240,7 +253,7 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                 }
             }
     
-            // Manejar colisión con plataformas mientras Mario sube (opcional, si deseas evitar algo al saltar hacia arriba)
+            // Manejar colisión con plataformas mientras Mario sube
             for (Estructura estructura : plataformas) {
                 if (estructura != null && mario.getRectangle().intersects(estructura.getRectangle())) {
                     if (mario.getVelocidadY() < 0 && mario.getY() <= estructura.getY() + 50) {
@@ -267,9 +280,19 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                 if (mario.getRectangle().intersects(barril.getRectangle())) {
                     barril.setVisible(false);
                     barril.setX(3000);
+                    // Restar vidas al colisionar con un barril, de derecha a izquierda
+                    if (plataformas[61] != null && plataformas[61].getVisible() == 1) {
+                        plataformas[61].setVisible(0);
+                    } else if (plataformas[60] != null && plataformas[60].getVisible() == 1) {
+                        plataformas[60].setVisible(0);
+                    } else if (plataformas[59] != null && plataformas[59].getVisible() == 1) {
+                        plataformas[59].setVisible(0);
+                    }
                 }
             }
         }
+
+        // Colisión bala-barril
         for (Bala bala : mario.getBalas()) {
             if (bala != null) { 
                 Rectangle rectBala = bala.getRectangle();
@@ -278,7 +301,6 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
                     if (barril != null) {
                         Rectangle rectBarril = barril.getRectangle();
                         if (rectBala.intersects(rectBarril)) {
-                          
                             barril.setVisible(false);
                             barril.setX(3000);
                             bala.setVisible(0);
@@ -290,14 +312,11 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
             }
         }
         
-
-    
         repaint();
     }
 
     public void keyPressed(KeyEvent e) {
         this.mario.keyPressed(e);
-       
     }
 
     public void keyReleased(KeyEvent e) {
@@ -306,7 +325,5 @@ public class Escenario extends JPanel implements ActionListener, KeyListener {
 
     public void keyTyped(KeyEvent e) {
     }
-
-
 
 }
